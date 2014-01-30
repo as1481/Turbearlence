@@ -124,19 +124,19 @@ public class PlayState extends BasicGameState {
 			
 			difficultyBackground.draw(0,0);
 
-		if (posX>100 && posX<216 && posY>300 && posY<354){
+		if (posX>100 && posX<275 && posY>300 && posY<375){
 			easyHover.draw(100,300);
 		} else {
 			easyButton.draw(100,300);
 		}
 
-		if (posX>100 && posX<284 && posY>400 && posY<454){
+		if (posX>100 && posX<275 && posY>400 && posY<475){
 			mediumHover.draw(100,400);
 		} else {
 			mediumButton.draw(100,400);
 		}
 		
-		if (posX>100 && posX<227 && posY>500 && posY<554){
+		if (posX>100 && posX<275 && posY>500 && posY<575){
 			hardHover.draw(100,500);
 		} else {
 			hardButton.draw(100,500);
