@@ -443,4 +443,8 @@ public class Airspace {
 	public int getNumberOfGameLoopsWhenDifficultyIncreases(){
 		return this.numberOfGameLoopsWhenDifficultyIncreases;
 	}
+	
+	public Airport getAirport(){
+		return this.airport;
+	}
 }

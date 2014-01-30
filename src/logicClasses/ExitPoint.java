@@ -46,9 +46,14 @@ public class ExitPoint extends Point {
 			this.exitPointLeft.draw((int)this.x, (int)this.y-20);
 		}
 		
-		if(this.x == 1200){
+		else if(this.x == 1200){
 			this.exitPointRight.draw((int)this.x-40, (int)this.y-20);
+		} 
+		else {
+			this.exitPointLeft.draw((int) this.x+151, (int) this.y+88);
 		}
+		
+		
 		
 		
     	g.setColor(Color.white);
@@ -61,6 +66,8 @@ public class ExitPoint extends Point {
     	
     	else if(this.x ==1200){
     		g.drawString(this.pointRef, (int)this.x-35, (int)this.y-7);
+    	} else {
+    		g.drawString(this.pointRef, (int) this.x+151, (int) this.y+88);
     	}
     	
     	

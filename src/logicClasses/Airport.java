@@ -12,9 +12,6 @@ public class Airport {
 	
 	static Image airportImage;
 	
-	ExitPoint landingPoint;
-	EntryPoint takeOffPoint;
-	
 	//location of Airport
 	float x, y;
 	
@@ -23,10 +20,7 @@ public class Airport {
 	Airport(float x, float y) {
 		this.x = x;
 		this.y = y;
-		
-		landingPoint = new ExitPoint((double) x, (double) y, "Land");
-		takeOffPoint = new EntryPoint((double) x, (double) y);
-		
+
 	}
 	
 	public void init(GameContainer gc) throws SlickException {
@@ -38,7 +32,13 @@ public class Airport {
 		airportImage.draw(x, y); // Airport image centred in middle of airspace
 	} 
 	
+	public float getX(){
+		return x;
+	}
 	
+	public float getY(){
+		return y;
+	}
 	
 	
 
