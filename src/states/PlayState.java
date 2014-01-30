@@ -25,7 +25,9 @@ public class PlayState extends BasicGameState {
 	private Sound endOfGameSound;
 	private Music gameplayMusic;
 	public static TrueTypeFont font;
-	private Image controlBarImage, clockImage, backgroundImage, difficultyBackground, easyButton, easyHover, mediumButton, mediumHover, hardButton, hardHover;
+	private static Image controlBarImage, clockImage, backgroundImage, 
+							difficultyBackground, easyButton, easyHover, mediumButton,
+								mediumHover, hardButton, hardHover;
 	private String stringTime;
 	private boolean settingDifficulty, gameEnded;
 

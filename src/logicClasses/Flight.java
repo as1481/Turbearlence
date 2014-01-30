@@ -15,7 +15,7 @@ public class Flight {
 	private boolean turningRight, turningLeft;
 	private String flightName;
 	private FlightPlan flightPlan;
-	private Image regularFlightImage, selectedFlightInformationBackgroundImage, slowFlightImage, fastFlightImage, shadowImage;
+	private static Image regularFlightImage, selectedFlightInformationBackgroundImage, slowFlightImage, fastFlightImage, shadowImage;
 	private boolean selected;
 	private Airspace airspace;
 

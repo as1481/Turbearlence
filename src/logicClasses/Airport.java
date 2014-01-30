@@ -10,11 +10,22 @@ public class Airport {
 	
 	//FIELDS
 	
-	Image airportImage;
+	static Image airportImage;
+	
+	ExitPoint landingPoint;
+	EntryPoint takeOffPoint;
+	
+	//location of Airport
+	float x, y;
 	
 	//CONSTRUCTOR
 	
-	Airport() {
+	Airport(float x, float y) {
+		this.x = x;
+		this.y = y;
+		
+		landingPoint = new ExitPoint((double) x, (double) y, "Land");
+		takeOffPoint = new EntryPoint((double) x, (double) y);
 		
 	}
 	
@@ -24,7 +35,7 @@ public class Airport {
 	
 	public void render(Graphics g, GameContainer gc) throws SlickException { 
 		
-		airportImage.draw(572,197); // Airport image centred in middle of airspace
+		airportImage.draw(x, y); // Airport image centred in middle of airspace
 	} 
 	
 	

@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 
 public class EntryPoint extends Point {
 	
-	Image entryPointTop, entryPointRight, entryPointLeft;
+	static Image entryPointTop, entryPointRight, entryPointLeft;
 
     public EntryPoint(double xcoord, double ycoord) {
     	super(xcoord, ycoord);

@@ -12,8 +12,8 @@ import org.lwjgl.input.Mouse;
 public class ControlsState extends BasicGameState {
 	
 	private int pageNumber;
-	private Image controlsBackgroundPage1,controlsBackgroundPage2, backButton, nextPageButton, previousPageButton, menuButton, quitButton, backButtonHover;
-    private Image nextPageHover, previousPageHover, quitHover;
+	private static Image controlsBackgroundPage1,controlsBackgroundPage2, backButton, nextPageButton, previousPageButton, menuButton, quitButton, backButtonHover;
+    private static Image nextPageHover, previousPageHover, quitHover;
     
 	public ControlsState(int state){
 		

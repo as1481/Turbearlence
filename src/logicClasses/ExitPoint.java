@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 
 public class ExitPoint extends Point {
 	
-	Image exitPointTop, exitPointRight, exitPointLeft;
+	static Image exitPointTop, exitPointRight, exitPointLeft;
 	
 	public ExitPoint(double xcoord, double ycoord, String name){
 	    super(xcoord, ycoord, name);
@@ -27,8 +27,6 @@ public class ExitPoint extends Point {
 		    this.exitPointTop = new Image("res/graphics/exitpoint_top.png");
 			this.exitPointRight = new Image("res/graphics/exitpoint_right.png");
 			this.exitPointLeft = new Image("res/graphics/exitpoint_left.png");	
-	   
-
 		}
 	
 	/**

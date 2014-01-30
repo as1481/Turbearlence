@@ -7,8 +7,8 @@ import org.newdawn.slick.state.*;
 
 public class GameOverState extends BasicGameState {
 	
-	private Image gameOverBackground, playAgainButton, quitButton, menuButton;
-	private Image playAgainHover, quitHover, menuHover;
+	private static Image gameOverBackground, playAgainButton, quitButton, menuButton;
+	private static Image playAgainHover, quitHover, menuHover;
 	
 	public GameOverState(int state) {
 		
