@@ -13,7 +13,9 @@ public class MenuState extends BasicGameState {
 	public static TrueTypeFont font;
 	private static Image creditsHover, controlsHover, menuBackground, playButton, quitButton, playHover, quitHover, creditsButton, controlsButton;
 	private boolean mouseBeenReleased;
+	
 
+	
 
 	public MenuState(int state) {
 		this.mouseBeenReleased=false;
@@ -31,16 +33,12 @@ public class MenuState extends BasicGameState {
 		creditsHover = new Image("res/menu_graphics/credits_hover.png");
 		controlsButton = new Image("res/menu_graphics/controls_silver.png");
 		controlsHover = new Image("res/menu_graphics/controls_hover.png");
+		}
 
-
-	}
-
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
-			throws SlickException {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)throws SlickException {
 		g.setColor(Color.white);
 		g.setFont(font);
 		menuBackground.draw(0,0);
-
 
 		int posX = Mouse.getX();
 		int posY = Mouse.getY();
