@@ -152,6 +152,9 @@ public class Flight {
 	/**
 	 * checkIfFlightAtWaypoint: checks whether a flight is close enough to the next waypoint in it's plan
 	 * for it to be considered at that waypoint.
+	 * If the waypoint under consideration is an exit point AND is at the airport, ie the aircraft is to land,
+	 * the flight must be at altitude 0 before it is considered close enough to land
+	 * At all other waypoints, altitude is not considered
 	 * @param Waypoint - The next waypoint in the flight's plan.
 	 * @return True if flight is at it's next waypoint.
 	 */
