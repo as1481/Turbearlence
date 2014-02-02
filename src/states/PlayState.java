@@ -104,8 +104,8 @@ public class PlayState extends BasicGameState {
     	airspace.addEntryPoint(airspace.getAirport().getTakeOffPoint());
     	// Exit Points
     	airspace.newExitPoint(800, 0, "1");
-    	airspace.newExitPoint(150, 200, "2");
-    	airspace.newExitPoint(1200, 300, "3");
+    	airspace.newExitPoint(150, 250, "2");
+    	airspace.newExitPoint(1200, 350, "3");
     	airspace.addExitPoint(airspace.getAirport().getLandingPoint());
     	airspace.init(gc);
 	}

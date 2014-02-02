@@ -160,6 +160,27 @@ public class Flight {
 		
 		if (((Math.abs(Math.round(this.x) - Math.round(waypoint.getX()))) <= 15)
 				&& (Math.abs(Math.round(this.y) - Math.round(waypoint.getY()))) <= 15) {
+			//flight at a waypoint
+			
+			if (waypoint.getX() == flightPlan.getExitPoint().getX()
+					&& waypoint.getY() == flightPlan.getExitPoint().getY()){
+				//flight at exit point
+				//catch flight being required to land
+				
+				if (waypoint.getX() == airspace.getAirport().getX()
+						&& waypoint.getY() == airspace.getAirport().getY()){
+					//flight at exit point and required to land
+					if (this.currentAltitude != 0){
+						//if the flight is not at altitude 0 for landing, report that it is not at the waypoint
+						this.targetAltitude = 0;
+						return false;
+					} else {
+						return true;
+					}
+
+					
+				} //end if
+			}//end if 
 			return true;
 		}
 
