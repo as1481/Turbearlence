@@ -65,24 +65,14 @@ public class SeparationRules {
 	
 	public void checkViolation(Airspace airspace){
 		
+		
 		for (int i = 0; i < airspace.getListOfFlights().size(); i++){
 			
 			for (int j = i+1; j < airspace.getListOfFlights().size(); j++){
 				
 				if ((lateralDistanceBetweenFlights(airspace.getListOfFlights().get(i), airspace.getListOfFlights().get(j)) < this.gameOverLateralSeparation)){
 					if ((verticalDistanceBetweenFlights(airspace.getListOfFlights().get(i), airspace.getListOfFlights().get(j)) < this.gameOverVerticalSeparation)){
-						
-						if (airspace.getZombiesAllowed() == false){
-							// If zombies are not allowed, game over
-							this.gameOverViolation = true;
-						}
-						else
-						{
-							// If zombies are allowed and aircraft crash 
-							airspace.setZombiesActive();
-							airspace.getListOfFlights().get(i).setZombie();
-							airspace.getListOfFlights().get(j).setZombie();
-						}
+					this.gameOverViolation = true;
 					}
 				}
 			}
