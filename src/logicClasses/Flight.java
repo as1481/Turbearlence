@@ -32,8 +32,9 @@ public class Flight {
 		
 		if (flightPlan.getEntryPoint().getX() == airspace.getAirport().getTakeOffPoint().getX()
 				&& flightPlan.getEntryPoint().getY() == airspace.getAirport().getTakeOffPoint().getY()){
-			//catch airport being used as an entry point, set altitude to 0 initially and climb
+			//catch airport being used as an entry point, set altitude to 0 initially and climb to the minimum altitude
 			this.currentAltitude = 0;
+			this.targetAltitude = Controls.MINIMUMALTITUDE;
 			System.out.println("Flight taking off");
 		} else {
 			this.currentAltitude = generateAltitude();
