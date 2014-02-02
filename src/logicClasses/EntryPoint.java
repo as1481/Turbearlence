@@ -46,6 +46,8 @@ public class EntryPoint extends Point {
 		
 		else if(this.x == 1200){
 			this.entryPointRight.draw((int)this.x-40, (int) this.y-20);
+		} else {
+			this.entryPointLeft.draw((int) this.x-80, (int) this.y-20);
 		}
     }
 	
