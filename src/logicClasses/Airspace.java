@@ -25,6 +25,8 @@ public class Airspace {
 	private int difficultyValueOfGame; 
 	private Controls controls;
 	
+	private EntryPoint airportEntry;
+	
 	// CONSTRUCTOR
 
 	public Airspace() {

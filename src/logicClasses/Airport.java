@@ -14,13 +14,16 @@ public class Airport {
 	
 	//location of Airport
 	float x, y;
+	EntryPoint takeOffPoint;
+	ExitPoint landingPoint;
 	
 	//CONSTRUCTOR
 	
 	Airport(float x, float y) {
 		this.x = x;
 		this.y = y;
-
+		this.takeOffPoint = new EntryPoint(x,y);
+		this.landingPoint = new ExitPoint(x,y, "Airport");
 	}
 	
 	public void init(GameContainer gc) throws SlickException {
@@ -45,6 +48,12 @@ public class Airport {
 		return y;
 	}
 	
-	
+	public EntryPoint getTakeOffPoint() {
+		return takeOffPoint;
+	}
+
+	public ExitPoint getLandingPoint() {
+		return landingPoint;
+	}
 
 }
