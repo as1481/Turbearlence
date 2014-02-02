@@ -30,6 +30,10 @@ public class PlayState extends BasicGameState {
 								mediumHover, hardButton, hardHover;
 	private String stringTime;
 	private boolean settingDifficulty, gameEnded;
+	
+	// Zombie mode button images
+	private static Image zombieOn, zombieOff;
+	boolean zombieSelected;
 
 	public PlayState(int state) {
 		
@@ -38,6 +42,7 @@ public class PlayState extends BasicGameState {
 
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		
+		this.zombieSelected = false; // Zombie mode off by default
 		gameEnded = false;
 		settingDifficulty = true;
 		time = 0;
@@ -83,6 +88,10 @@ public class PlayState extends BasicGameState {
 		hardButton = new Image("res/menu_graphics/hard.png");
 		hardHover = new Image("res/menu_graphics/hard_hover.png");
 		
+		// Zombie mode button images
+		zombieOn = new Image("res/menu_graphics/zombieOn.png");
+		zombieOff = new Image("res/menu_graphics/zombieOff.png");
+		
 		//initialise the airspace object;
 		
 		
@@ -123,6 +132,16 @@ public class PlayState extends BasicGameState {
 			int posY = 600 - flippedposY;
 			
 			difficultyBackground.draw(0,0);
+			
+			
+		// Draw zombie mode selection button
+		if (zombieSelected == false){
+			zombieOff.draw(100,175);
+		}
+		else
+		{
+			zombieOn.draw(100,175);
+		}
 
 		if (posX>100 && posX<275 && posY>300 && posY<375){
 			easyHover.draw(100,300);
@@ -194,11 +213,22 @@ public class PlayState extends BasicGameState {
 			
 			posY = 600-posY;
 			
+			// Toggle zombie mode on button click
+			if((posX>100&&posX<300) && (posY>175&&posY<275) && Mouse.isButtonDown(0)){
+				if(this.zombieSelected == true){
+					this.zombieSelected = false;
+				}
+				else{
+					this.zombieSelected = true;
+				}
+			}
+			
 			if((posX>100&&posX<216) && (posY>300&&posY<354) && Mouse.isButtonDown(0)) {
 				
 				airspace.setDifficultyValueOfGame(1);
 				airspace.getControls().setDifficultyValueOfGame(1);
 				airspace.createAndSetSeparationRules();
+				airspace.setZombiesAllowed(zombieSelected);
 				settingDifficulty = false;
 				
 				
@@ -210,6 +240,7 @@ public class PlayState extends BasicGameState {
 				airspace.setDifficultyValueOfGame(2);
 				airspace.getControls().setDifficultyValueOfGame(2);
 				airspace.createAndSetSeparationRules();
+				airspace.setZombiesAllowed(zombieSelected);
 				settingDifficulty = false;
 				
 			}
@@ -220,6 +251,7 @@ public class PlayState extends BasicGameState {
 				airspace.setDifficultyValueOfGame(3);
 				airspace.getControls().setDifficultyValueOfGame(3);
 				airspace.createAndSetSeparationRules();
+				airspace.setZombiesAllowed(zombieSelected);
 				settingDifficulty = false;
 				
 			}

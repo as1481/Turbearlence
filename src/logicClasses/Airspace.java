@@ -24,6 +24,8 @@ public class Airspace {
 	private Airport airport;
 	private int difficultyValueOfGame; 
 	private Controls controls;
+	private boolean zombieModeAllowed; // If zombie mode allowed
+	private boolean zombieModeActive; // If zombies are here
 	
 	// CONSTRUCTOR
 
@@ -447,4 +449,23 @@ public class Airspace {
 	public Airport getAirport(){
 		return this.airport;
 	}
+	
+	// Zombie mode mutators
+	public void setZombiesAllowed(boolean allowed){
+		// Set if zombies are allowed in this game
+		zombieModeAllowed = allowed;
+	}
+	public boolean getZombiesAllowed(){
+		// Return if zombie mode is allowed this game
+		return this.zombieModeAllowed;
+	}
+	public boolean getZombiesActive(){
+		// Return if zombie mode is active
+		return this.zombieModeActive;
+	}
+	public void setZombiesActive(){
+		// Set zombie mode to be active
+		zombieModeActive = true;
+	}
+	
 }

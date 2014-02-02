@@ -18,9 +18,11 @@ public class Flight {
 	private static Image regularFlightImage, selectedFlightInformationBackgroundImage, slowFlightImage, fastFlightImage, shadowImage;
 	private boolean selected;
 	private Airspace airspace;
+	private boolean isZombie;
+	
+	// Zombie images
+	private static Image zombieSlowImage, zombieImage, zombieFastImage;
 
-	
-	
 
 	// CONSTRUCTOR
 	public Flight(Airspace airspace) {
@@ -379,7 +381,6 @@ public class Flight {
 		this.slowFlightImage = new Image("res/graphics/flight_slow.png");
 		this.fastFlightImage = new Image("res/graphics/flight_fast.png");
 		this.selectedFlightInformationBackgroundImage = new Image("res/graphics/selected_flight2.jpg");
-
 	}
 	
 	
@@ -415,6 +416,14 @@ public class Flight {
 		
 	}
 	
+	// Converts flight images to zombie images
+	public void toZombies() throws SlickException
+	{
+		// Assign zombie images
+		this.zombieFastImage = new Image("res/graphics/zombie_fast.png");
+		this.zombieSlowImage = new Image("res/graphics/zombie_slow.png");
+		this.zombieImage = new Image("res/graphics/zombie.png");
+	}
 
 	// MUTATORS AND ACCESSORS
 	
@@ -505,6 +514,14 @@ public class Flight {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	
+	// Zombie mutators
+	public void setZombie(){
+		this.isZombie = true;
+	}
+	public boolean getZombie(){
+		return isZombie;
 	}
 
 	// toString function to display a flight object so we can read it
