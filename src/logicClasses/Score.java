@@ -65,7 +65,7 @@ public class Score {
 		score += (100 * _flightsSuccessful);
 		score -= (int)(_timeSeparationViolated);
 		score -= (int)(_timeManual);
-		score -= (1000 * _gameOvers);
+		score -= (10000 * _gameOvers);
 		return " "+ score;
 	}
 
