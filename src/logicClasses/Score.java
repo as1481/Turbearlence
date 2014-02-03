@@ -5,13 +5,13 @@ public class Score {
 	private int _flightsSuccessful;
 	private double _timePlayed;
 	private double _timeManual;
-	private double _timeSeparationViolated;
+	private int _SeparationViolated;
 	private int _gameOvers;
 	
 	public Score(){
 		_timePlayed = 0;
 		_timeManual = 0;
-		_timeSeparationViolated = 0;
+		_SeparationViolated = 0;
 		_flightsSuccessful = 0;
 		_gameOvers = 0;
 	}
@@ -29,9 +29,9 @@ public class Score {
 		return _timeManual;
 	}
 	
-	public double timeViolated()
+	public int SeparationViolated()
 	{
-		return _timeSeparationViolated;
+		return _SeparationViolated;
 	}
 	
 	public int gameOvers()
@@ -47,8 +47,8 @@ public class Score {
 		_timeManual += dt;
 	}
 	
-	public void addTimeViolated(double dt) {
-		_timeSeparationViolated += dt;
+	public void addSeparationViolated(int dt) {
+		_SeparationViolated += dt;
 	}
 
 	public void addFlight() {
@@ -63,7 +63,7 @@ public class Score {
 		int score = 0;
 		score += (int)(_timePlayed);
 		score += (100 * _flightsSuccessful);
-		score -= (int)(_timeSeparationViolated);
+		score -= (100 *_SeparationViolated);
 		score -= (int)(_timeManual);
 		score -= (10000 * _gameOvers);
 		return " "+ score;

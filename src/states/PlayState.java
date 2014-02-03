@@ -164,6 +164,8 @@ public class PlayState extends BasicGameState {
 			g.setColor(Color.white);
 			clockImage.draw(0,5);
 			g.drawString(this.stringTime, 25, 11);
+			
+			//Drawing Score, updating score
 			g.drawString("Score:" + this.score.calculate(), 10, 28);
 		
 		}
@@ -186,6 +188,7 @@ public class PlayState extends BasicGameState {
 	    	time = 0;
 	    	gameEnded = false;
 	    	settingDifficulty = true;
+	    	score = new Score();
 			
 		}
 		
@@ -269,6 +272,7 @@ public class PlayState extends BasicGameState {
 						
 			airspace.newFlight(gc);
 			airspace.update(gc);
+		    score.addSeparationViolated(airspace.getWarnings());
 			if (airspace.getSeparationRules().getGameOverViolation() == true){
 				airspace.getSeparationRules().setGameOverViolation(false);
 				airspace.resetAirspace();

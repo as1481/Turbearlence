@@ -24,14 +24,12 @@ public class Airspace {
 	private Airport airport;
 	private int difficultyValueOfGame; 
 	private Controls controls;
-	private Score score; 
 	private EntryPoint airportEntry;
-	
+	private int warnings;
 	// CONSTRUCTOR
 
 	public Airspace() {
 		this.maximumNumberOfFlightsInAirspace = 10;
-		//this.score = 0;
 		this.listOfFlightsInAirspace = new ArrayList<Flight>();
 		this.listOfWayppoints = new ArrayList<Waypoint>();
 		this.listofEntrypoints = new ArrayList<EntryPoint>();
@@ -43,6 +41,7 @@ public class Airspace {
 		this.randomNumberForFlightGeneration = 500;
 		this.controls = new Controls();
 		this.difficultyValueOfGame = 0; // This value will be changed when the user selects a difficulty in the playstate
+		this.warnings = 0; //Value of separation breaches occurred; 
 		
 		
 		
@@ -209,7 +208,7 @@ public class Airspace {
 	public boolean checkIfFlightHasLeftAirspace(Flight flight) {
 
 		if (flight.getX() > 1250 || flight.getX() < 100 || flight.getY() > 650 || flight.getY() < -50) { // x and y must be within these bounds to be within screen space
-			score.addFlight();
+
 			return true;
 		} else {
 			return false;
@@ -291,7 +290,6 @@ public class Airspace {
 			}
 			
 		}
-		
 		this.separationRules.update(this);
 		this.controls.update(gc, this);
 		
@@ -334,9 +332,7 @@ public class Airspace {
 		return this.maximumNumberOfFlightsInAirspace;
 	}
 
-	public Score getScore() {
-		return this.score;
-	}
+
 
 	public List<Flight> getListOfFlights() {
 		return this.listOfFlightsInAirspace;
@@ -450,5 +446,13 @@ public class Airspace {
 	
 	public Airport getAirport(){
 		return this.airport;
+	}
+	
+	public int getWarnings(){
+		return this.warnings; 
+	}
+	
+	public void setWarnings(int i){
+		this.warnings = i; 
 	}
 }

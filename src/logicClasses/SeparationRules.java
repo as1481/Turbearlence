@@ -109,11 +109,34 @@ public class SeparationRules {
 						g.drawLine(f1x, f1y, f2x, f2y);
 						g.setLineWidth(1);
 						
+						
 				}}
 			}
 		}
 		
 	}
+	
+public int warning(Airspace airspace){
+		
+		int warnings = 0; 
+		for (int i = 0; i < airspace.getListOfFlights().size(); i++) {
+			
+			for (int j = i + 1; j < airspace.getListOfFlights().size(); j++ ) {	
+				
+				if (this.lateralDistanceBetweenFlights(airspace.getListOfFlights().get(i), 
+						airspace.getListOfFlights().get(j)) <= this.getWarningLateralSeparation()) {
+					
+					if (this.verticalDistanceBetweenFlights(airspace.getListOfFlights().get(i), 
+							airspace.getListOfFlights().get(j)) <= this.getWarningVerticalSeparation()) {
+						
+						warnings += 1;
+						
+				}}
+			}
+		}
+		return warnings; 
+}
+		
 	
 	/**
 	 * update: This calls the checkViolation method to detect whether the game over separation rules
@@ -125,6 +148,7 @@ public class SeparationRules {
 	public void update(Airspace airspace) {
 		
 		this.checkViolation(airspace);
+		airspace.setWarnings(warning(airspace));
 	}
 	
 	
