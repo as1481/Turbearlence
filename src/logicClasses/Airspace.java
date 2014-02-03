@@ -14,7 +14,7 @@ public class Airspace {
 	// FIELDS
 
 	private int maximumNumberOfFlightsInAirspace;
-	private int score, numberOfGameLoopsSinceLastFlightAdded, numberOfGameLoops,
+	private int numberOfGameLoopsSinceLastFlightAdded, numberOfGameLoops,
 				numberOfGameLoopsWhenDifficultyIncreases, randomNumberForFlightGeneration;
 	private List<Flight> listOfFlightsInAirspace;
 	private List<Waypoint> listOfWayppoints;
@@ -24,14 +24,14 @@ public class Airspace {
 	private Airport airport;
 	private int difficultyValueOfGame; 
 	private Controls controls;
-	
+	private Score score; 
 	private EntryPoint airportEntry;
 	
 	// CONSTRUCTOR
 
 	public Airspace() {
 		this.maximumNumberOfFlightsInAirspace = 10;
-		this.score = 0;
+		//this.score = 0;
 		this.listOfFlightsInAirspace = new ArrayList<Flight>();
 		this.listOfWayppoints = new ArrayList<Waypoint>();
 		this.listofEntrypoints = new ArrayList<EntryPoint>();
@@ -43,6 +43,7 @@ public class Airspace {
 		this.randomNumberForFlightGeneration = 500;
 		this.controls = new Controls();
 		this.difficultyValueOfGame = 0; // This value will be changed when the user selects a difficulty in the playstate
+		
 		
 		
 	}
@@ -208,6 +209,7 @@ public class Airspace {
 	public boolean checkIfFlightHasLeftAirspace(Flight flight) {
 
 		if (flight.getX() > 1250 || flight.getX() < 100 || flight.getY() > 650 || flight.getY() < -50) { // x and y must be within these bounds to be within screen space
+			score.addFlight();
 			return true;
 		} else {
 			return false;
@@ -220,9 +222,9 @@ public class Airspace {
 	 * @param value the amount the score is increased by. 
 	 */
 	
-	public void changeScore(int value) {
-		this.score += value;
-	}
+	//public void changeScore(int value) {
+	//	this.score += value;
+	//}
 	
 	/**
 	 * increaseDifficulty 
@@ -332,7 +334,7 @@ public class Airspace {
 		return this.maximumNumberOfFlightsInAirspace;
 	}
 
-	public int getScore() {
+	public Score getScore() {
 		return this.score;
 	}
 

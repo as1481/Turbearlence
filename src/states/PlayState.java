@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.math.*;
 
 import logicClasses.Airspace;
+import logicClasses.Score;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
@@ -30,6 +31,7 @@ public class PlayState extends BasicGameState {
 								mediumHover, hardButton, hardHover;
 	private String stringTime;
 	private boolean settingDifficulty, gameEnded;
+	private Score score;
 
 	public PlayState(int state) {
 		
@@ -41,6 +43,7 @@ public class PlayState extends BasicGameState {
 		gameEnded = false;
 		settingDifficulty = true;
 		time = 0;
+		score = new Score();
 		airspace = new Airspace();
 		i = 1;
 		this.stringTime="";
@@ -161,6 +164,7 @@ public class PlayState extends BasicGameState {
 			g.setColor(Color.white);
 			clockImage.draw(0,5);
 			g.drawString(this.stringTime, 25, 11);
+			g.drawString("Score:" + this.score.calculate(), 10, 28);
 		
 		}
 		
@@ -232,6 +236,7 @@ public class PlayState extends BasicGameState {
 			// Updating Clock and Time
 			
 			time += delta;
+			score.addTime(delta);
 			float decMins=time/1000/60;
 			int mins = (int) decMins;
 			float decSecs=decMins-mins;
@@ -270,6 +275,7 @@ public class PlayState extends BasicGameState {
 				gameplayMusic.stop();
 				endOfGameSound.play();
 				sbg.enterState(2);
+				score.addGameOver();
 				gameEnded = true;
 							
 			}
