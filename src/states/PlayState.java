@@ -283,6 +283,13 @@ public class PlayState extends BasicGameState {
 				sbg.enterState(3);
 			}
 			
+			if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+				airspace.resetAirspace();
+				gameplayMusic.stop();
+				gameEnded = true;
+				sbg.enterState(0);
+			}
+			
 						
 			if (!gameplayMusic.playing()){
 				//Loops gameplay music based on random number created in init
