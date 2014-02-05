@@ -23,10 +23,10 @@ public class FlightPlan {
 	private boolean changingPlan; // Is the user currently changing the flight plan?
 	private boolean draggingWaypoint;// Is the user currently dragging a waypoint?
 	private EntryPoint entryPoint;
+	private ExitPoint exitPoint;
 	
 
 	// CONSTRUCTOR
-	
 
 	public FlightPlan(Airspace airspace, Flight flight) {
 		this.flight = flight;
@@ -48,7 +48,6 @@ public class FlightPlan {
 	 */
 	
 	public EntryPoint generateEntryPoint(Airspace airspace){
-		
 		Random rand = new Random();
 		int randomNumber = rand.nextInt(3);
 			
@@ -73,7 +72,7 @@ public class FlightPlan {
 		ArrayList<Point> tempListOfExitPoints = new ArrayList<Point>();
 		Boolean exitpointAdded = false;
 		
-		if (!airspace.getListOfWaypoints().isEmpty()&& !airspace.getListOfExitPoints().isEmpty()) { // if there is a list of waypoints and a list of exit points
+		if (!airspace.getListOfWaypoints().isEmpty() && !airspace.getListOfExitPoints().isEmpty()) { // if there is a list of waypoints and a list of exit points
 				Random rand = new Random();
 				
 				// Initialising Temporary Lists
@@ -88,6 +87,7 @@ public class FlightPlan {
 				
 				// Adding Waypoints to Plan
 				
+				//pick at least 3 random points to add to the plan
 				int pointsInPlan = rand.nextInt(3) + 3; 
 				
 				for (int i = 0; i < pointsInPlan - 1; i++) {
@@ -97,23 +97,28 @@ public class FlightPlan {
 				}
 				
 				// Adding ExitPoint to Plan
-				
+		
 				int ExitPointIndex = rand.nextInt(tempListOfExitPoints.size());
 				
 				while (exitpointAdded == false){
 					
+					//if exitPoint is where the entryPoint is, remove it from candidates and generate a new random index
 					if (this.entryPoint.getY() == tempListOfExitPoints.get(ExitPointIndex).getY()){
 						tempListOfExitPoints.remove(ExitPointIndex);
 						ExitPointIndex = rand.nextInt(tempListOfExitPoints.size());
 					}
 					
+					//if exitPoint is where the entryPoint is, remove it from candidates and generate a new random index
 					else if (this.entryPoint.getX() == tempListOfExitPoints.get(ExitPointIndex).getX()){
 						tempListOfExitPoints.remove(ExitPointIndex);
 						ExitPointIndex = rand.nextInt(tempListOfExitPoints.size());
 					}
+					
 					else{
 						tempRoute.add(tempListOfExitPoints.get(ExitPointIndex));
 						exitpointAdded = true;
+						//store exitPoint to be used for checking whether the plane needs to land at the airport
+						exitPoint = (ExitPoint) tempListOfExitPoints.get(ExitPointIndex);
 					}
 				}
 		}
@@ -363,6 +368,10 @@ public class FlightPlan {
 	
 	public EntryPoint getEntryPoint(){
 		return this.entryPoint;
+	}
+	
+	public ExitPoint getExitPoint() {
+		return exitPoint;
 	}
 
 	@Override

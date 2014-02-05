@@ -12,7 +12,9 @@ public class PauseState extends BasicGameState {
 	public static TrueTypeFont font;
 	private int pageNumber;
 
-	private Image pauseBackgroundPage1,pauseBackgroundPage2, backButtonHover, nextPageButton, previousPageButton, menuButton, quitButton, nextPageButtonHover, previousPageButtonHover, quitButtonHover, backHover;
+	private static Image pauseBackgroundPage1,pauseBackgroundPage2, backButtonHover, nextPageButton, 
+					previousPageButton, menuButton, quitButton, nextPageButtonHover, previousPageButtonHover, 
+						quitButtonHover, backHover;
 	
 	
 	public PauseState(int state) {

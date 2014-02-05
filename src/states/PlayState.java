@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.math.*;
 
 import logicClasses.Airspace;
+import logicClasses.Score;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
@@ -25,9 +26,12 @@ public class PlayState extends BasicGameState {
 	private Sound endOfGameSound;
 	private Music gameplayMusic;
 	public static TrueTypeFont font;
-	private Image controlBarImage, clockImage, backgroundImage, difficultyBackground, easyButton, easyHover, mediumButton, mediumHover, hardButton, hardHover;
+	private static Image controlBarImage, clockImage, backgroundImage, 
+							difficultyBackground, easyButton, easyHover, mediumButton,
+								mediumHover, hardButton, hardHover;
 	private String stringTime;
 	private boolean settingDifficulty, gameEnded;
+	private Score score;
 
 	public PlayState(int state) {
 		
@@ -39,6 +43,7 @@ public class PlayState extends BasicGameState {
 		gameEnded = false;
 		settingDifficulty = true;
 		time = 0;
+		score = new Score();
 		airspace = new Airspace();
 		i = 1;
 		this.stringTime="";
@@ -90,7 +95,7 @@ public class PlayState extends BasicGameState {
     	airspace.newWaypoint(700, 60,  "C");
     	airspace.newWaypoint(800, 320, "D");
     	airspace.newWaypoint(600, 418, "E");
-    	airspace.newWaypoint(500, 220, "F");
+    	airspace.newWaypoint(500, 320, "F");
     	airspace.newWaypoint(950, 188, "G");
     	airspace.newWaypoint(1050, 272,"H");
     	airspace.newWaypoint(900, 420, "I");
@@ -99,13 +104,13 @@ public class PlayState extends BasicGameState {
     	airspace.newEntryPoint(150, 400);
     	airspace.newEntryPoint(1200, 200);
     	airspace.newEntryPoint(600, 0);
+    	airspace.addEntryPoint(airspace.getAirport().getTakeOffPoint());
     	// Exit Points
     	airspace.newExitPoint(800, 0, "1");
-    	airspace.newExitPoint(150, 200, "2");
-    	airspace.newExitPoint(1200, 300, "3");
+    	airspace.newExitPoint(150, 250, "2");
+    	airspace.newExitPoint(1200, 350, "3");
+    	airspace.addExitPoint(airspace.getAirport().getLandingPoint());
     	airspace.init(gc);
-		
-
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -122,19 +127,19 @@ public class PlayState extends BasicGameState {
 			
 			difficultyBackground.draw(0,0);
 
-		if (posX>100 && posX<216 && posY>300 && posY<354){
+		if (posX>100 && posX<275 && posY>300 && posY<375){
 			easyHover.draw(100,300);
 		} else {
 			easyButton.draw(100,300);
 		}
 
-		if (posX>100 && posX<284 && posY>400 && posY<454){
+		if (posX>100 && posX<275 && posY>400 && posY<475){
 			mediumHover.draw(100,400);
 		} else {
 			mediumButton.draw(100,400);
 		}
 		
-		if (posX>100 && posX<227 && posY>500 && posY<554){
+		if (posX>100 && posX<275 && posY>500 && posY<575){
 			hardHover.draw(100,500);
 		} else {
 			hardButton.draw(100,500);
@@ -159,6 +164,9 @@ public class PlayState extends BasicGameState {
 			g.setColor(Color.white);
 			clockImage.draw(0,5);
 			g.drawString(this.stringTime, 25, 11);
+			
+			//Drawing Score, updating score
+			g.drawString("Score:" + this.score.calculate(), 10, 28);
 		
 		}
 		
@@ -180,6 +188,7 @@ public class PlayState extends BasicGameState {
 	    	time = 0;
 	    	gameEnded = false;
 	    	settingDifficulty = true;
+	    	score = new Score();
 			
 		}
 		
@@ -230,6 +239,7 @@ public class PlayState extends BasicGameState {
 			// Updating Clock and Time
 			
 			time += delta;
+			score.addTime(delta);
 			float decMins=time/1000/60;
 			int mins = (int) decMins;
 			float decSecs=decMins-mins;
@@ -262,12 +272,14 @@ public class PlayState extends BasicGameState {
 						
 			airspace.newFlight(gc);
 			airspace.update(gc);
+		    score.addSeparationViolated(airspace.getWarnings());
 			if (airspace.getSeparationRules().getGameOverViolation() == true){
 				airspace.getSeparationRules().setGameOverViolation(false);
 				airspace.resetAirspace();
 				gameplayMusic.stop();
 				endOfGameSound.play();
 				sbg.enterState(2);
+				score.addGameOver();
 				gameEnded = true;
 							
 			}
@@ -281,6 +293,22 @@ public class PlayState extends BasicGameState {
 				sbg.enterState(3);
 			}
 			
+			if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+				airspace.resetAirspace();
+				gameplayMusic.stop();
+				gameEnded = true;
+				sbg.enterState(0);
+			}
+			
+			if (input.isKeyPressed(Input.KEY_C)) {
+				airspace.getSeparationRules().setGameOverViolation(false);
+				airspace.resetAirspace();
+				gameplayMusic.stop();
+				endOfGameSound.play();
+				sbg.enterState(2);
+				score.addGameOver();
+				gameEnded = true;
+			}
 						
 			if (!gameplayMusic.playing()){
 				//Loops gameplay music based on random number created in init

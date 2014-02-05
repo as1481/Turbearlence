@@ -7,7 +7,7 @@ import org.lwjgl.input.Mouse;
 
 public class CreditsState extends BasicGameState {
 	
-	private Image menuBackground, menuButton, menuHover;
+	private static Image menuBackground, menuButton, menuHover;
 
 	public CreditsState(int state){
 		

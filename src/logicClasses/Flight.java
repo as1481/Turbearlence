@@ -15,7 +15,7 @@ public class Flight {
 	private boolean turningRight, turningLeft;
 	private String flightName;
 	private FlightPlan flightPlan;
-	private Image regularFlightImage, selectedFlightInformationBackgroundImage, slowFlightImage, fastFlightImage, shadowImage;
+	private static Image regularFlightImage, selectedFlightInformationBackgroundImage, slowFlightImage, fastFlightImage, shadowImage;
 	private boolean selected;
 	private Airspace airspace;
 
@@ -26,14 +26,25 @@ public class Flight {
 	public Flight(Airspace airspace) {
 		this.x = 0;
 		this.y = 0;
+		this.airspace = airspace;
+		this.flightPlan = new FlightPlan(airspace, this);
 		this.targetAltitude = 0;
-		this.currentAltitude = generateAltitude();
+		
+		if (flightPlan.getEntryPoint().getX() == airspace.getAirport().getTakeOffPoint().getX()
+				&& flightPlan.getEntryPoint().getY() == airspace.getAirport().getTakeOffPoint().getY()){
+			//catch airport being used as an entry point, set altitude to 0 initially and climb to the minimum altitude
+			this.currentAltitude = 0;
+			this.targetAltitude = Controls.MINIMUMALTITUDE;
+			System.out.println("Flight taking off");
+		} else {
+			this.currentAltitude = generateAltitude();
+			//else randomise altitude
+		}
+		
 		this.targetHeading = 0;
 		this.currentHeading = 0;
 		this.turningRight = false;
 		this.turningLeft = false;
-		this.airspace = airspace;
-		this.flightPlan = new FlightPlan(airspace, this);
 		this.selected = false;
 		
 
@@ -141,6 +152,9 @@ public class Flight {
 	/**
 	 * checkIfFlightAtWaypoint: checks whether a flight is close enough to the next waypoint in it's plan
 	 * for it to be considered at that waypoint.
+	 * If the waypoint under consideration is an exit point AND is at the airport, ie the aircraft is to land,
+	 * the flight must be at altitude 0 before it is considered close enough to land
+	 * At all other waypoints, altitude is not considered
 	 * @param Waypoint - The next waypoint in the flight's plan.
 	 * @return True if flight is at it's next waypoint.
 	 */
@@ -149,6 +163,27 @@ public class Flight {
 		
 		if (((Math.abs(Math.round(this.x) - Math.round(waypoint.getX()))) <= 15)
 				&& (Math.abs(Math.round(this.y) - Math.round(waypoint.getY()))) <= 15) {
+			//flight at a waypoint
+			
+			if (waypoint.getX() == flightPlan.getExitPoint().getX()
+					&& waypoint.getY() == flightPlan.getExitPoint().getY()){
+				//flight at exit point
+				//catch flight being required to land
+				
+				if (waypoint.getX() == airspace.getAirport().getX()
+						&& waypoint.getY() == airspace.getAirport().getY()){
+					//flight at exit point and required to land
+					if (this.currentAltitude != 0){
+						//if the flight is not at altitude 0 for landing, report that it is not at the waypoint
+						this.targetAltitude = 0;
+						return false;
+					} else {
+						return true;
+					}
+
+					
+				} //end if
+			}//end if 
 			return true;
 		}
 

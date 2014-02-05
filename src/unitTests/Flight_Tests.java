@@ -287,6 +287,18 @@ public class Flight_Tests {
 		
 	}
 	
+	@Test
+	public void updateAltitudeTest6(){
+		//test than an aircraft spanwed at altitude 0 may ascend to a given altitude
+		//flight should move towards 26,000 from 0.
+		//Hence after one update, flight should be at altitude = 1
+		flight1.setCurrentAltitude(0);
+		flight1.setTargetAltitude(26000);
+		flight1.updateAltitude();
+		assertEquals(1, flight1.getAltitude(), 0.1);
+	}
+	
+	
 	
 	//Testing update_current_heading()
 	

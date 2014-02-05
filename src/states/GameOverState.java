@@ -1,14 +1,18 @@
 package states;
+
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
+
+import logicClasses.Airspace;
+import logicClasses.Score;
 
 
 
 public class GameOverState extends BasicGameState {
 	
-	private Image gameOverBackground, playAgainButton, quitButton, menuButton;
-	private Image playAgainHover, quitHover, menuHover;
+	private static Image gameOverBackground, playAgainButton, quitButton, menuButton;
+	private static Image playAgainHover, quitHover, menuHover;
 	
 	public GameOverState(int state) {
 		
@@ -55,6 +59,7 @@ public class GameOverState extends BasicGameState {
 		}
 		
 		g.setColor(Color.white);
+		g.drawString("Score:", 550, 550);
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)throws SlickException {

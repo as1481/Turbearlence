@@ -23,7 +23,7 @@ public class Point {
     x = xcoord; 
     y = ycoord;
     pointRef = name;
-    System.out.println("Point " + pointRef + " set:(" + x + "," + y +").");
+    //System.out.println("Point " + pointRef + " set:(" + x + "," + y +").");
     }
     
 
