@@ -575,11 +575,5 @@ public class Flight {
 	public Airspace getAirspace(){
 		return airspace;
 	}
-	
-	public boolean getSelected(){
-		return this.selected;
-	}
-
-
 
 }

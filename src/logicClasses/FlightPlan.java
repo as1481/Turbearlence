@@ -179,7 +179,7 @@ public class FlightPlan {
 	 */
 	
 	public void changeFlightPlan(){
-		if (this.flight.getSelected() && this.currentRoute.size() > 0 ){
+		if (this.flight.isSelected() && this.currentRoute.size() > 0 ){
 			boolean mouseOverWaypoint = this.isMouseOnWaypoint();
 
 				// Checks if user is not currently dragging a waypoint
@@ -317,7 +317,7 @@ public class FlightPlan {
 	public void render(Graphics g, GameContainer gc) throws SlickException {
 
 
-		if(this.flight.getSelected()) {
+		if(this.flight.isSelected()) {
 			if(this.changingPlan == true){
 				this.drawFlightsPlan(g, gc);
 				this.markUnavailableWaypoints(g, gc);
