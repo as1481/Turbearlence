@@ -18,9 +18,6 @@ public class Flight {
 	private static Image regularFlightImage, selectedFlightInformationBackgroundImage, slowFlightImage, fastFlightImage, shadowImage;
 	private boolean selected;
 	private Airspace airspace;
-	
-	//~~ added fields
-	private boolean manuallyControlled;
 
 	// CONSTRUCTOR
 	public Flight(Airspace airspace) {
@@ -46,7 +43,6 @@ public class Flight {
 		this.turningRight = false;
 		this.turningLeft = false;
 		this.selected = false;
-		this.manuallyControlled = false;
 
 	}
 
@@ -392,7 +388,8 @@ public class Flight {
 	public void updateFlightPlan() {
 		this.flightPlan.update();
 		
-		if (!this.manuallyControlled) {
+		
+		if (this.getFlightPlan().getChangingPlan()) {
 			double targetX = this.flightPlan.getCurrentRoute().get(0).x;
 			double targetY = this.flightPlan.getCurrentRoute().get(0).y;
 			
