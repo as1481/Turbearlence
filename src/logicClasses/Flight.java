@@ -18,9 +18,9 @@ public class Flight {
 	private static Image regularFlightImage, selectedFlightInformationBackgroundImage, slowFlightImage, fastFlightImage, shadowImage;
 	private boolean selected;
 	private Airspace airspace;
-
 	
-	
+	//~~ added fields
+	private boolean manuallyControlled;
 
 	// CONSTRUCTOR
 	public Flight(Airspace airspace) {
@@ -46,7 +46,7 @@ public class Flight {
 		this.turningRight = false;
 		this.turningLeft = false;
 		this.selected = false;
-		
+		this.manuallyControlled = false;
 
 	}
 
@@ -57,7 +57,6 @@ public class Flight {
 	 * generateAltitude: Randomly assigns one of three different altitudes to a flight
 	 * @return A random altitude (either 28000, 29000 or 30000)
 	 */
-
 	public int generateAltitude() {
 		Random rand = new Random();
 		int check = rand.nextInt(3);
@@ -72,15 +71,14 @@ public class Flight {
 		return 27000; // Default state (this won't ever be returned)
 	}
 
-/**
- * calculateHeadingToFirstWaypoint: calculates heading between flight's current position and the first waypoint
- * in the flight's plan. The flight's current position will always be it's entrypoint because this method
- * is only called within the newFlight() function in airspace.
- * @param desX - The X coordinate of the waypoint
- * @param dexY - The Y coordinate of the waypoint
- * @return The heading between the flight and first waypoint.
- */
-	
+	/**
+	 * calculateHeadingToFirstWaypoint: calculates heading between flight's current position and the first waypoint
+	 * in the flight's plan. The flight's current position will always be it's entrypoint because this method
+	 * is only called within the newFlight() function in airspace.
+	 * @param desX - The X coordinate of the waypoint
+	 * @param dexY - The Y coordinate of the waypoint
+	 * @return The heading between the flight and first waypoint.
+	 */
 	public double calculateHeadingToFirstWaypoint(double desX, double desY) {
 		
 		double deltaX;
@@ -102,7 +100,6 @@ public class Flight {
 	 * towards it's target heading.
 	 * @param degreeTurnedBy - The amount of degrees you want to turn left by.
 	 */
-	
 	public void turnFlightLeft(int degreeTurnedBy) {
 
 		this.turningRight = false;
@@ -121,7 +118,6 @@ public class Flight {
 	 * towards it's target heading.
 	 * @param degreeTurnedBy - The amount of degrees you want to turn right by.
 	 */
-	
 	public void turnFlightRight(int degreeTurnedBy) {
 
 		this.turningLeft = false;
@@ -141,7 +137,6 @@ public class Flight {
 	 * done using newHeading % 360.
 	 * @param newHeading - The heading the flight has been commmanded to fly at.
 	 */
-
 	public void giveHeading(int newHeading) {
 		this.turningRight = false;
 		this.turningLeft = false;
@@ -158,7 +153,6 @@ public class Flight {
 	 * @param Waypoint - The next waypoint in the flight's plan.
 	 * @return True if flight is at it's next waypoint.
 	 */
-	
 	public boolean checkIfFlightAtWaypoint(Point waypoint) {
 		
 		if (((Math.abs(Math.round(this.x) - Math.round(waypoint.getX()))) <= 15)
@@ -192,15 +186,13 @@ public class Flight {
 
 	
 	// DRAWING METHODS
-	
 	/**
 	 * drawFlight: draws the flight at it's current x,y and draws its information around within a circle.
 	 * Different images for the flight are used depending on how fast the plane is.
 	 * @param g - Graphics libraries required by slick2d.
 	 * @param gc - GameContainer required by slick2d.
 	 */
-	
-	public void drawFlight(Graphics g, GameContainer gc ){
+	public void drawFlight(Graphics g, GameContainer gc) {
 
 				g.setColor(Color.white);
 				g.setWorldClip(150, 0, 1200, 600);
@@ -277,7 +269,7 @@ public class Flight {
 	
 	public void drawSelectedFlightInformation(Graphics g, GameContainer gc) {
 		
-		this.selectedFlightInformationBackgroundImage.draw(0,450);
+		Flight.selectedFlightInformationBackgroundImage.draw(0,450);
 		g.setColor(Color.white);
 		g.drawString(this.flightName,  10, 460);
 		g.drawString("Plan: ",  10, 480);
@@ -342,7 +334,6 @@ public class Flight {
 	
 		double rate = 0.5;
 		if (Math.round(this.targetHeading) != Math.round(this.currentHeading)) {
-			
 
 			/*
 			 * If plane has been given a heading so no turning direction specified,
@@ -397,7 +388,25 @@ public class Flight {
 		}
 	}
 	
-	
+	//~~ Updated to follow flight plan
+	public void updateFlightPlan() {
+		this.flightPlan.update();
+		
+		if (!this.manuallyControlled) {
+			double targetX = this.flightPlan.getCurrentRoute().get(0).x;
+			double targetY = this.flightPlan.getCurrentRoute().get(0).y;
+			
+			double dx = targetX - this.x;
+			double dy = targetY - this.y;
+			
+			double angle = Math.toDegrees(Math.atan2(dy, dx));
+			angle += 90;
+			if (angle < 0) {
+				angle += 360;
+			}
+			this.targetHeading = angle;
+		}
+	}
 
 
 	// UPDATE, RENDER, INIT
@@ -409,11 +418,11 @@ public class Flight {
 	
 	public void init(GameContainer gc) throws SlickException {
 		
-		this.regularFlightImage = new Image("res/graphics/flight.png");
-		this.shadowImage = new Image("res/graphics/flight_shadow.png");
-		this.slowFlightImage = new Image("res/graphics/flight_slow.png");
-		this.fastFlightImage = new Image("res/graphics/flight_fast.png");
-		this.selectedFlightInformationBackgroundImage = new Image("res/graphics/selected_flight2.jpg");
+		Flight.regularFlightImage = new Image("res/graphics/flight.png");
+		Flight.shadowImage = new Image("res/graphics/flight_shadow.png");
+		Flight.slowFlightImage = new Image("res/graphics/flight_slow.png");
+		Flight.fastFlightImage = new Image("res/graphics/flight_fast.png");
+		Flight.selectedFlightInformationBackgroundImage = new Image("res/graphics/selected_flight2.jpg");
 
 	}
 	
@@ -427,7 +436,7 @@ public class Flight {
 		this.updateCurrentHeading();
 		this.updateXYCoordinates();
 		this.updateAltitude();
-		this.flightPlan.update();
+		this.updateFlightPlan();
 	}
 	
 /**

@@ -20,14 +20,10 @@ public class Point {
     
     //Point Constructor that also takes pointRef string, more commonly used.
     public Point(double xcoord, double ycoord, String name){
-    x = xcoord; 
-    y = ycoord;
-    pointRef = name;
-    //System.out.println("Point " + pointRef + " set:(" + x + "," + y +").");
+	    x = xcoord; 
+	    y = ycoord;
+	    pointRef = name;
     }
-    
-
-    
     
     // MUTATORS AND ACCESSORS
     
@@ -56,8 +52,6 @@ public class Point {
   	}
     
 
-
-    
     public boolean equals(Point point){
     	if(point instanceof Point){
     		if ((point.getX() ==  this.x) && (point.getY() == this.y)){

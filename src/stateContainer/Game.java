@@ -25,11 +25,11 @@ public class Game extends StateBasedGame {
 	
 	/**
 	 * Adds all states to a container 
-	 * @param NAME The game's title
+	 * @param title The game's title
 	 */
 
-	public Game(String NAME) {
-		super(NAME);
+	public Game(String title) {
+		super(title);
 		this.addState(new MenuState(MENUSTATE));
 		this.addState(new PlayState(PLAYSTATE));
 		this.addState(new GameOverState(GAMEOVERSTATE));

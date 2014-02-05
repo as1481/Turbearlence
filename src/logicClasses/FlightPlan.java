@@ -12,8 +12,7 @@ import org.newdawn.slick.SlickException;
 public class FlightPlan {
 	
 	// FIELDS
-	
-	
+
 	private ArrayList<Point> currentRoute = new ArrayList<Point>(); // Array that stores the current list of waypoints
 	private ArrayList<Point> waypointsAlreadyVisited; // Array that stores all the waypoints the flight has passed through
 	private double velocity; // velocity of the aircraft
