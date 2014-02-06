@@ -26,7 +26,7 @@ public class PlayState extends BasicGameState {
 	private Sound endOfGameSound;
 	private Music gameplayMusic;
 	public static TrueTypeFont font;
-	private static Image controlBarImage, clockImage, backgroundImage, 
+	private static Image controlBarImage, controlBarImage2, clockImage, backgroundImage, 
 							difficultyBackground, easyButton, easyHover, mediumButton,
 								mediumHover, hardButton, hardHover;
 	private String stringTime;
@@ -68,7 +68,7 @@ public class PlayState extends BasicGameState {
 		
 		// Music
 		
-		gameplayMusic = new Music("res/music/Jarvic 8.ogg");
+		gameplayMusic = new Music("res/music/Aurea Carmina.ogg");
 		endOfGameSound = new Sound("res/music/175385__digitaldominic__scream.wav");
 	
 		
@@ -76,6 +76,7 @@ public class PlayState extends BasicGameState {
 		//Images
 		
 		controlBarImage = new Image("res/graphics/control_bar_vertical.png");
+		controlBarImage2 = new Image("res/graphics/control_bar_vertical2.png");
 		clockImage = new Image("res/graphics/clock.png");
 		backgroundImage = new Image("res/graphics/background.png");
 		difficultyBackground = new Image("res/menu_graphics/difficulty.jpg");
