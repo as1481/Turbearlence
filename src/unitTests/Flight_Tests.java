@@ -243,7 +243,7 @@ public class Flight_Tests {
 		flight1.setAltitude(27000);
 		flight1.setTargetAltitude(28000);
 		flight1.updateAltitude();
-		assertEquals(27001, flight1.getAltitude(), 0.1);
+		assertEquals(27000 + 10, flight1.getAltitude(), 0.1);
 		
 	}
 	
@@ -260,7 +260,7 @@ public class Flight_Tests {
 	@Test
 	public void updateAltitudeTest3(){
 		// Testing that the Flight moves towards the target altitude.
-		flight1.setCurrentAltitude(26999);
+		flight1.setCurrentAltitude(26990);
 		flight1.setTargetAltitude(27000);
 		flight1.updateAltitude();
 		assertEquals(27000, flight1.getAltitude(), 0.1);
@@ -273,14 +273,14 @@ public class Flight_Tests {
 		flight1.setCurrentAltitude(28000);
 		flight1.setTargetAltitude(27000);
 		flight1.updateAltitude();
-		assertEquals(27999, flight1.getAltitude(), 0.1);
+		assertEquals(27990, flight1.getAltitude(), 0.1);
 		
 	}
 	
 	@Test
 	public void updateAltitudeTest5(){
 		// Testing that the Flight moves towards the target altitude.
-		flight1.setCurrentAltitude(27001);
+		flight1.setCurrentAltitude(27010);
 		flight1.setTargetAltitude(27000);
 		flight1.updateAltitude();
 		assertEquals(27000, flight1.getAltitude(), 0.1);
@@ -295,7 +295,7 @@ public class Flight_Tests {
 		flight1.setCurrentAltitude(0);
 		flight1.setTargetAltitude(26000);
 		flight1.updateAltitude();
-		assertEquals(1, flight1.getAltitude(), 0.1);
+		assertEquals(10, flight1.getAltitude(), 0.1);
 	}
 	
 	

@@ -18,6 +18,7 @@ public class Flight {
 	private static Image regularFlightImage, selectedFlightInformationBackgroundImage, slowFlightImage, fastFlightImage, shadowImage;
 	private boolean selected;
 	private Airspace airspace;
+	private int changeAltitudeRate = 10;
 
 	// CONSTRUCTOR
 	public Flight(Airspace airspace) {
@@ -312,11 +313,11 @@ public class Flight {
 	
 	public void updateAltitude() {
 		if (this.currentAltitude > this.targetAltitude) {
-			this.currentAltitude -= 10;
+			this.currentAltitude -= changeAltitudeRate;
 		}
 
 		else if (this.currentAltitude < this.targetAltitude) {
-			this.currentAltitude += 10;
+			this.currentAltitude += changeAltitudeRate;
 		}
 	}
 	
