@@ -466,6 +466,10 @@ public class Controls {
 		this.selectedFlight = flight1;
 		this.getSelectedFlight().getFlightPlan().setChangingPlan(true);
 	}
+	
+	public void nullSelectedFlight(){
+		this.selectedFlight = null;
+	}
 
 
 	

@@ -61,7 +61,7 @@ public class Airspace {
 		this.numberOfGameLoops = 0; 
 		this.numberOfGameLoopsWhenDifficultyIncreases = 3600;
 		this.separationRules.setGameOverViolation(false); // Prevents user immediately entering game over state upon replay
-		this.controls.setSelectedFlight(null); // Prevents information about flight from previous game being displayed 
+		this.controls.nullSelectedFlight(); // Prevents information about flight from previous game being displayed 
 		
 		
 	}
