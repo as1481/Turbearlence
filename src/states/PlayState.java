@@ -32,6 +32,10 @@ public class PlayState extends BasicGameState {
 	private String stringTime;
 	private boolean settingDifficulty, gameEnded;
 	private Score score;
+	
+	// Dancefloor variables
+	private int tickCount;
+	private boolean dancefloorState;
 
 	public PlayState(int state) {
 		
@@ -39,6 +43,9 @@ public class PlayState extends BasicGameState {
 	}
 
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		
+		dancefloorState = true;
+		tickCount = 0;
 		
 		gameEnded = false;
 		settingDifficulty = true;
@@ -151,10 +158,27 @@ public class PlayState extends BasicGameState {
 		
 			g.setFont(font);
 			
-			
 			// Drawing Side Images
 			backgroundImage.draw(150,0);
-			controlBarImage.draw(0,0);
+			
+			// Alternating disco dancefloor side image
+			if((tickCount % 50) == 0 ){
+				if (this.dancefloorState == true){
+					this.dancefloorState = false;
+				}
+				else{
+					this.dancefloorState = true;
+				}
+				
+			}
+			tickCount = tickCount + 1;
+			
+			if(this.dancefloorState == true){
+				controlBarImage.draw(0,0);
+			}
+			else{
+				controlBarImage2.draw(0,0);
+			}
 			
 			// Drawing Airspace and elements within it
 			g.setColor(Color.white);
