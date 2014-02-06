@@ -12,7 +12,7 @@ import states.ControlsState;
 
 public class Game extends StateBasedGame {
 
-	public static final String NAME = "Turbulence";
+	public static final String NAME = "TurBearlence";
 	public static final int MENUSTATE = 0;
 	public static final int PLAYSTATE = 1;
 	public static final int GAMEOVERSTATE = 2;
