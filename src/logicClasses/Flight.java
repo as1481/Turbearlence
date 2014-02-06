@@ -312,11 +312,11 @@ public class Flight {
 	
 	public void updateAltitude() {
 		if (this.currentAltitude > this.targetAltitude) {
-			this.currentAltitude -= 1;
+			this.currentAltitude -= 10;
 		}
 
 		else if (this.currentAltitude < this.targetAltitude) {
-			this.currentAltitude += 1;
+			this.currentAltitude += 10;
 		}
 	}
 	
