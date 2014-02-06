@@ -8,6 +8,8 @@ import org.newdawn.slick.state.*;
 import org.newdawn.slick.util.ResourceLoader;
 import org.lwjgl.input.Mouse;
 
+import stateContainer.Game;
+
 
 public class ControlsState extends BasicGameState {
 	
@@ -117,7 +119,7 @@ public class ControlsState extends BasicGameState {
 		if((posX > 20 && posX < 40) && (posY > 20 && posY < 40)) {
 			if(Mouse.isButtonDown(0)) {
 				pageNumber = 1;
-				sbg.enterState(0);
+				sbg.enterState(Game.MENUSTATE);
 			}
 			
 		}

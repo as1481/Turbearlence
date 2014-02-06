@@ -392,7 +392,7 @@ public class Controls {
 			
 			// Only allow controls if user isn't changing a plan
 			
-			if(!(this.selectedFlight.getFlightPlan().getChangingPlan())){
+			if(!this.selectedFlight.getFlightPlan().getChangingPlan() && !this.selectedFlight.getFlightPlan().isFinished()){
 				
 				if(posX>10&&posX<150&&posY<65&&posY>45&&Mouse.isButtonDown(0)){
 					this.selectedFlight.getFlightPlan().setChangingPlan(true);

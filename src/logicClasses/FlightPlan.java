@@ -23,6 +23,7 @@ public class FlightPlan {
 	private boolean draggingWaypoint;// Is the user currently dragging a waypoint?
 	private EntryPoint entryPoint;
 	private ExitPoint exitPoint;
+	private boolean isFinished = false;
 	
 
 	// CONSTRUCTOR
@@ -168,7 +169,16 @@ public class FlightPlan {
 			if (this.flight.checkIfFlightAtWaypoint(currentRoute.get(0))) {
 				this.waypointsAlreadyVisited.add(this.currentRoute.get(0));
 				this.currentRoute.remove(0);
+				
+				if(this.currentRoute.size() == 0){ //recheck if flightPlan is finished
+					this.changingPlan = false;
+					this.isFinished = true;
+				}
 			}
+		} else {
+			//current route is empty
+			this.changingPlan = false; //set false to avoid null pointer on array
+			this.isFinished = true;
 		}
 
 	}
@@ -371,6 +381,10 @@ public class FlightPlan {
 	
 	public ExitPoint getExitPoint() {
 		return exitPoint;
+	}
+	
+	public boolean isFinished() {
+		return isFinished;
 	}
 
 	@Override

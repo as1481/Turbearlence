@@ -387,22 +387,23 @@ public class Flight {
 	
 	//~~ Updated to follow flight plan
 	public void updateFlightPlan() {
-		this.flightPlan.update();
-		
-		
-		if (this.getFlightPlan().getChangingPlan()) {
-			double targetX = this.flightPlan.getCurrentRoute().get(0).x;
-			double targetY = this.flightPlan.getCurrentRoute().get(0).y;
+		if (!this.flightPlan.isFinished()){
+			this.flightPlan.update();
 			
-			double dx = targetX - this.x;
-			double dy = targetY - this.y;
-			
-			double angle = Math.toDegrees(Math.atan2(dy, dx));
-			angle += 90;
-			if (angle < 0) {
-				angle += 360;
+			if (this.getFlightPlan().getChangingPlan() && (flightPlan.isFinished() != true)) {
+				double targetX = this.flightPlan.getCurrentRoute().get(0).x;
+				double targetY = this.flightPlan.getCurrentRoute().get(0).y;
+				
+				double dx = targetX - this.x;
+				double dy = targetY - this.y;
+				
+				double angle = Math.toDegrees(Math.atan2(dy, dx));
+				angle += 90;
+				if (angle < 0) {
+					angle += 360;
+				}
+				this.targetHeading = angle;
 			}
-			this.targetHeading = angle;
 		}
 	}
 
@@ -430,11 +431,12 @@ public class Flight {
  */
 
 	public void update() {
-
-		this.updateCurrentHeading();
-		this.updateXYCoordinates();
-		this.updateAltitude();
-		this.updateFlightPlan();
+		if (!this.flightPlan.isFinished()){
+			this.updateCurrentHeading();
+			this.updateXYCoordinates();
+			this.updateAltitude();
+			this.updateFlightPlan();
+		}
 	}
 	
 /**

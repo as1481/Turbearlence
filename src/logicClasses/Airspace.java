@@ -397,7 +397,7 @@ public class Airspace {
 		
 		// If flight was selected, de-select it
 		if (!(this.listOfFlightsInAirspace.contains(this.controls.getSelectedFlight()))) {
-			this.controls.setSelectedFlight(null);
+			this.controls.nullSelectedFlight();
 
 		}
 	}
