@@ -2,10 +2,14 @@ package states;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.lwjgl.input.Mouse;
+
 import java.awt.Font;
 import java.io.InputStream;
+
 import org.newdawn.slick.util.ResourceLoader;
 import org.newdawn.slick.TrueTypeFont;
+
+import stateContainer.Game;
 
 
 
@@ -13,6 +17,8 @@ public class MenuState extends BasicGameState {
 	public static TrueTypeFont font;
 	private static Image creditsHover, controlsHover, menuBackground, playButton, quitButton, playHover, quitHover, creditsButton, controlsButton;
 	private boolean mouseBeenReleased;
+	
+	private final static int stateMenu = 9;
 
 
 	public MenuState(int state) {
@@ -97,7 +103,7 @@ public class MenuState extends BasicGameState {
 				
 				if (Mouse.isButtonDown(0)) {
 					this.mouseBeenReleased=false;
-					sbg.enterState(1);
+					sbg.enterState(Game.PLAYSTATE);//1
 				}
 
 			} 
@@ -105,7 +111,7 @@ public class MenuState extends BasicGameState {
 			if ((posX > 490 && posX < 725) && (posY > 534 && posY < 596)) {
 				if (Mouse.isButtonDown(0)) {
 					this.mouseBeenReleased=false;
-					sbg.enterState(5);
+					sbg.enterState(Game.CONTROLSSTATE);//5
 				}
 
 			} 
@@ -118,7 +124,7 @@ public class MenuState extends BasicGameState {
 
 			if( (posX>20 && posX< 178 && posY>534 && posY<575) && Mouse.isButtonDown(0)) {
 				this.mouseBeenReleased=false;
-				sbg.enterState(4);
+				sbg.enterState(Game.CREDITSSTATE);
 			}
 		}
 	}

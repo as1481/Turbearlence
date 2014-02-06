@@ -4,6 +4,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.lwjgl.input.Mouse;
 
+import stateContainer.Game;
+
 
 public class CreditsState extends BasicGameState {
 	
@@ -82,7 +84,7 @@ public class CreditsState extends BasicGameState {
 		int posY = 600 - flippedposY;
 	
 		if((posX>20 && posX< 136 && posY>20 && posY<66) && Mouse.isButtonDown(0)) {
-			sbg.enterState(0);
+			sbg.enterState(Game.MENUSTATE);
 		}
 	
 	}
