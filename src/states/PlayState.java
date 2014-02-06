@@ -201,7 +201,7 @@ public class PlayState extends BasicGameState {
 			
 			posY = 600-posY;
 			
-			if((posX>100&&posX<216) && (posY>300&&posY<354) && Mouse.isButtonDown(0)) {
+			if((posX>100&&posX<275) && (posY>300&&posY<375) && Mouse.isButtonDown(0)) {
 				
 				airspace.setDifficultyValueOfGame(1);
 				airspace.getControls().setDifficultyValueOfGame(1);
@@ -212,7 +212,7 @@ public class PlayState extends BasicGameState {
 			}
 			
 			
-			if((posX>100&&posX<284) && (posY>400&&posY<454) && Mouse.isButtonDown(0)) {
+			if((posX>100&&posX<275) && (posY>400&&posY<475) && Mouse.isButtonDown(0)) {
 				
 				airspace.setDifficultyValueOfGame(2);
 				airspace.getControls().setDifficultyValueOfGame(2);
@@ -222,7 +222,7 @@ public class PlayState extends BasicGameState {
 			}
 			
 			
-			if((posX>100&&posX<227) && (posY>500&&posY<554) && Mouse.isButtonDown(0)) {
+			if((posX>100&&posX<275) && (posY>500&&posY<575) && Mouse.isButtonDown(0)) {
 				
 				airspace.setDifficultyValueOfGame(3);
 				airspace.getControls().setDifficultyValueOfGame(3);
