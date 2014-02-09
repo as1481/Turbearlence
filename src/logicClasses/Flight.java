@@ -390,7 +390,7 @@ public class Flight {
 		if (!this.flightPlan.isFinished()){
 			this.flightPlan.update();
 			
-			if (this.getFlightPlan().getChangingPlan() && (flightPlan.isFinished() != true)) {
+			if ((!this.selected || this.getFlightPlan().getChangingPlan()) && (flightPlan.isFinished() != true)) {
 				double targetX = this.flightPlan.getCurrentRoute().get(0).x;
 				double targetY = this.flightPlan.getCurrentRoute().get(0).y;
 				
@@ -402,7 +402,7 @@ public class Flight {
 				if (angle < 0) {
 					angle += 360;
 				}
-				this.targetHeading = angle;
+				this.targetHeading = Math.round(angle);
 			}
 		}
 	}
