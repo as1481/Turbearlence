@@ -11,19 +11,22 @@ public class Airport {
 	//FIELDS
 	
 	static Image airportImage;
+	public final static String name = "Airport";
 	
 	//location of Airport
 	float x, y;
 	EntryPoint takeOffPoint;
 	ExitPoint landingPoint;
 	
-	//CONSTRUCTOR
+	private boolean flightOnRunway = false;
 	
+	//CONSTRUCTOR
+
 	Airport(float x, float y) {
 		this.x = x;
 		this.y = y;
 		this.takeOffPoint = new EntryPoint(x,y);
-		this.landingPoint = new ExitPoint(x,y, "Airport");
+		this.landingPoint = new ExitPoint(x,y, name);
 	}
 	
 	public void init(GameContainer gc) throws SlickException {
@@ -56,4 +59,11 @@ public class Airport {
 		return landingPoint;
 	}
 
+	public boolean isFlightOnRunway() {
+		return flightOnRunway;
+	}
+
+	public void setFlightOnRunway(boolean flightOnRunway) {
+		this.flightOnRunway = flightOnRunway;
+	}
 }
