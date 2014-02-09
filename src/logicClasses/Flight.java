@@ -328,7 +328,6 @@ public class Flight {
 	 */
 
 	public void updateCurrentHeading() {
-	
 		double rate = 0.5;
 		if (Math.round(this.targetHeading) != Math.round(this.currentHeading)) {
 
@@ -337,37 +336,33 @@ public class Flight {
 			 * below works out whether it should turn left or right to that heading
 			 */
 			
-			if(this.turningRight == false && this.turningLeft == false){
-
+//			if(!this.turningRight && !this.turningLeft){
 				if (Math.abs(this.targetHeading - this.currentHeading) == 180) {
 					this.turningRight = true;
-				} 
-				
-				else if (this.currentHeading + 180 <= 359){
-					
+					this.turningLeft = false;
+				} else if (this.currentHeading + 180 < 360){
 					if (this.targetHeading < this.currentHeading + 180 && this.targetHeading > this.currentHeading){
 						this.turningRight = true;
+						this.turningLeft = false;
 					}
 					else {
 						this.turningLeft = true;
+						this.turningRight = false;
 					}
-				}
-				
-				else {
-					
+				} else {
 					if (this.targetHeading > this.currentHeading - 180 && this.targetHeading < this.currentHeading){
 						this.turningLeft = true;
+						this.turningRight = false;
 					}
 					else {
 						this.turningRight = true;
+						this.turningLeft = false;
 					}
 				}
-
-			}
+//			}
 			
 			// If plane is already turning right or user has told it to turn right
-			
-			if (this.turningRight == true) {
+			if (this.turningRight) {
 				this.currentHeading += rate;
 				if (Math.round(this.currentHeading) >= 360 && this.targetHeading != 360) {
 					this.currentHeading = 0;
@@ -375,14 +370,28 @@ public class Flight {
 			}
 
 			// If plane is already turning left or user has told it to turn left
-			
-			if (this.turningLeft == true) {
+			if (this.turningLeft) {
 				this.currentHeading -= rate;
 				if (Math.round(this.currentHeading) <= 0 && this.targetHeading != 0) {
 					this.currentHeading = 360;
 				}
 			}
 		}
+//		double turnSpeed = 0.5;
+//		// Get difference in angle
+//		double angleDifference = (this.targetHeading % 360) - (this.currentHeading % 360);
+//		boolean crossesPositiveNegativeDivide = angleDifference < -180 * 7 / 8;
+//		// Correct difference
+//		angleDifference += 180;
+//		angleDifference %= 360;
+//		angleDifference -= 180;
+//		// Get which way to turn.
+//		int angleDirection = (int)(angleDifference /= Math.abs(angleDifference));
+//		if (crossesPositiveNegativeDivide) angleDirection *= -1;  
+//		double angleMagnitude = Math.min(Math.abs(turnSpeed), Math.abs(angleDifference));
+//		this.turningLeft = angleDirection == -1;
+//		this.turningRight = angleDirection == 1;
+//		this.currentHeading += angleMagnitude * angleDirection;
 	}
 	
 	//~~ Updated to follow flight plan
