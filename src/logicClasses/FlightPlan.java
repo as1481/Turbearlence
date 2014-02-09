@@ -49,7 +49,16 @@ public class FlightPlan {
 	
 	public EntryPoint generateEntryPoint(Airspace airspace){
 		Random rand = new Random();
-		int randomNumber = rand.nextInt(3);
+		int randomNumber;
+		if (airspace.getAirport().isFlightOnRunway()){
+			//if there is a flight on the runway, choose from the 3 first points in the list
+			//these points are not on the airport
+			//hence, only one flight may take off.
+			randomNumber = rand.nextInt(3);
+		} else {
+			//otherwise, choose from all entry points including airport
+			randomNumber = rand.nextInt(4);
+		}
 			
 		// Setting flights x and y to the coordinates of it's entrypoint
 		flight.setX(airspace.getListOfEntryPoints().get(randomNumber).getX()); // choose one a get the x and y values
