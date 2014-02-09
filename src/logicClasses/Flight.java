@@ -19,6 +19,11 @@ public class Flight {
 	private boolean selected;
 	private Airspace airspace;
 	private int changeAltitudeRate = 10;
+	
+	private boolean requestingToTakeOff = false;
+	private boolean permittedToTakeOff = false;
+	private boolean requestingToLand = false;
+	private boolean permittedToLand = false;
 
 	// CONSTRUCTOR
 	public Flight(Airspace airspace) {
@@ -33,6 +38,8 @@ public class Flight {
 			//catch airport being used as an entry point, set altitude to 0 initially and climb to the minimum altitude
 			this.currentAltitude = 0;
 			this.targetAltitude = Controls.MINIMUMALTITUDE;
+			this.requestingToTakeOff = true;
+			airspace.getAirport().setFlightOnRunway(true);
 			System.out.println("Flight taking off");
 		} else {
 			this.currentAltitude = generateAltitude();
@@ -164,9 +171,14 @@ public class Flight {
 				if (waypoint.getX() == airspace.getAirport().getX()
 						&& waypoint.getY() == airspace.getAirport().getY()){
 					//flight at exit point and required to land
+					
+					if (!this.permittedToLand){
+						//alert that flight is requesting to land if it has not been permitted
+						this.requestingToLand = true;	
+					}
 					if (this.currentAltitude != 0){
 						//if the flight is not at altitude 0 for landing, report that it is not at the waypoint
-						this.targetAltitude = 0;
+						//flight must be permitted to land by player.
 						return false;
 					} else {
 						return true;
@@ -255,6 +267,14 @@ public class Flight {
 				}
 				
 				g.setWorldClip(0, 0, 1200, 600);
+				
+				if(this.requestingToLand){
+					g.drawString("REQUESTING PERMISSION TO LAND", (int) this.x+24, (int) this.y);
+				}
+				if(this.requestingToTakeOff){
+					g.drawString("REQUESTING PERMISSION TO TAKE OFF", (int) this.x+24, (int) this.y);
+				}
+				
 		
 	}
 	
@@ -266,7 +286,7 @@ public class Flight {
 	
 	public void drawSelectedFlightInformation(Graphics g, GameContainer gc) {
 		
-		Flight.selectedFlightInformationBackgroundImage.draw(0,450);
+		/*Flight.selectedFlightInformationBackgroundImage.draw(0,450);
 		g.setColor(Color.white);
 		g.drawString(this.flightName,  10, 460);
 		g.drawString("Plan: ",  10, 480);
@@ -284,7 +304,7 @@ public class Flight {
 		g.drawString(Math.round(this.currentHeading) + " DEG",
 			10, 540);
 		g.drawString(Math.round(this.getFlightPlan().getVelocity()) + " MPH",
-			10, 560);
+			10, 560);*/
 		
 	}
 	
@@ -298,7 +318,7 @@ public class Flight {
 
 	public void updateXYCoordinates() {
 		double velocity = (this.flightPlan.getVelocity()) / 1000;
-
+		
 		this.x += velocity * Math.sin(Math.toRadians(this.currentHeading));
 
 		this.y -= velocity * Math.cos(Math.toRadians(this.currentHeading));
@@ -413,6 +433,15 @@ public class Flight {
 				}
 				this.targetHeading = Math.round(angle);
 			}
+			
+			this.updateRequiredToLand();
+		}
+	}
+	
+	public void updateRequiredToLand(){
+		//if next waypoint in flight plan is the airport, request to land.
+		if (!this.permittedToLand && !this.flightPlan.isFinished() && this.getFlightPlan().getPointByIndex(0).getPointRef() == Airport.name){
+			this.requestingToLand = true;
 		}
 	}
 
@@ -431,7 +460,6 @@ public class Flight {
 		Flight.slowFlightImage = new Image("res/graphics/flight_slow.png");
 		Flight.fastFlightImage = new Image("res/graphics/flight_fast.png");
 		Flight.selectedFlightInformationBackgroundImage = new Image("res/graphics/selected_flight2.jpg");
-
 	}
 	
 	
@@ -440,11 +468,12 @@ public class Flight {
  */
 
 	public void update() {
-		if (!this.flightPlan.isFinished()){
+		if (!this.flightPlan.isFinished() && !this.requestingToTakeOff){
 			this.updateCurrentHeading();
 			this.updateXYCoordinates();
 			this.updateAltitude();
 			this.updateFlightPlan();
+			//this.updateRequiredToLand();
 		}
 	}
 	
@@ -462,15 +491,12 @@ public class Flight {
 
 		if(this.selected) {
 			this.drawSelectedFlightInformation(g, gc);
-			
-
 		}
 		
 	}
 	
 
 	// MUTATORS AND ACCESSORS
-	
 
 	public double getX() {
 		return this.x;
@@ -583,6 +609,39 @@ public class Flight {
 	
 	public Airspace getAirspace(){
 		return airspace;
+	}
+	
+	public boolean isRequestingToTakeOff() {
+		return requestingToTakeOff;
+	}
+
+	public void setRequestingToTakeOff(boolean requestingToTakeOff) {
+		this.requestingToTakeOff = requestingToTakeOff;
+	}
+
+	public boolean isPermittedToTakeOff() {
+		return permittedToTakeOff;
+	}
+
+	public void setPermittedToTakeOff(boolean permittedToTakeOff) {
+		this.permittedToTakeOff = permittedToTakeOff;
+		this.airspace.getAirport().setFlightOnRunway(false);
+	}
+
+	public boolean isRequestingToLand() {
+		return requestingToLand;
+	}
+
+	public void setRequestingToLand(boolean requestingToLand) {
+		this.requestingToLand = requestingToLand;
+	}
+
+	public boolean isPermittedToLand() {
+		return permittedToLand;
+	}
+
+	public void setPermittedToLand(boolean permittedToLand) {
+		this.permittedToLand = permittedToLand;
 	}
 
 }
