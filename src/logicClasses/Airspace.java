@@ -26,6 +26,7 @@ public class Airspace {
 	private Controls controls;
 	private EntryPoint airportEntry;
 	private int warnings;
+	
 	// CONSTRUCTOR
 
 	public Airspace() {

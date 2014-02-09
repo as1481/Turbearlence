@@ -24,7 +24,7 @@ public class Controls {
 	public static final int  MINIMUMALTITUDE = 26000;
 	private Flight selectedFlight;
 	private String text; //Used for parsing textbox inputs
-	private Image altitudeButton, changePlanButton;
+	private static Image altitudeButton, changePlanButton, landButton, takeOffButton;
 	private int difficultyValueOfGame; //Sets the difficulty of the control scheme
 	
 	
@@ -54,6 +54,8 @@ public class Controls {
 		this.headingControlTextBox.setMaxLength(3);
 		altitudeButton = new Image("res/graphics/altitudebutton.png");
 		changePlanButton = new Image("res/graphics/altitudebutton.png"); // same as altitude button
+		landButton = new Image("res/graphics/altitudebutton.png"); // same as altitude button
+		takeOffButton = new Image("res/graphics/altitudebutton.png"); // same as altitude button
 		
 	}
 	
@@ -92,6 +94,26 @@ public class Controls {
 					this.selectedFlight.setTargetAltitude(this.selectedFlight.getTargetAltitude()-1000); //Set the target altitude 1000 lower
 				}
 			}
+	}
+	
+	public void handleLandTakeOffButtons(){
+		
+		int posX=Mouse.getX(); //Get the mouse positions 
+		int posY=Mouse.getY();
+		
+		posY = 570 - posY; // Mapping Mouse coords onto graphic coords
+		
+		if(posX>10&&posX<150 &&posY>420&&posY<440&&Mouse.isButtonDown(0) && this.selectedFlight.isRequestingToLand()){
+			System.out.println("permitted to land");
+			this.selectedFlight.setRequestingToLand(false);
+			this.selectedFlight.setPermittedToLand(true);
+			this.selectedFlight.setTargetAltitude(0);
+		} else if (posX>10&&posX<150 &&posY>450&&posY<480&&Mouse.isButtonDown(0) && this.selectedFlight.isRequestingToTakeOff()){
+			this.selectedFlight.setRequestingToTakeOff(false);
+			this.selectedFlight.setPermittedToTakeOff(true);
+			this.selectedFlight.setTargetAltitude(26000);
+			System.out.println("permitted to take off");
+		}
 	}
 	
 	/**
@@ -358,6 +380,19 @@ public class Controls {
 					g.drawString("At min altitude", 10, 420);
 				}
 				
+				landButton.draw(0, 450);
+				if(this.selectedFlight.isRequestingToLand() == true){
+					g.drawString("Permit to Land", 10, 450);
+				} else {
+					g.drawString("Don't Land", 10, 450);
+				}
+				takeOffButton.draw(0, 480);
+				if(this.selectedFlight.isRequestingToTakeOff() == true){
+					g.drawString("Permit to Take Off", 10, 480);
+				} else {
+					g.drawString("Don't Take Off", 10, 480);
+				}
+				
 				
 				
 				}
@@ -411,6 +446,7 @@ public class Controls {
 				// Handle and update Altitude Buttons
 				
 				this.handleAndUpdateAltitudeButtons();
+				this.handleLandTakeOffButtons();
 				
 				
 				//ALTITUDE KEYS
