@@ -1,5 +1,11 @@
 package states;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.*;
+
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
@@ -59,7 +65,7 @@ public class GameOverState extends BasicGameState {
 		}
 		
 		g.setColor(Color.white);
-		g.drawString("Score:", 550, 550);
+		g.drawString("Score:" + getScore(), 550, 550);
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)throws SlickException {
@@ -90,4 +96,27 @@ public class GameOverState extends BasicGameState {
 	public int getID() {
 			return 2;
 	}
+	
+	public int getScore(){
+		int c = 0;
+		try{
+			File inputFile = new File("Score.txt");
+			FileInputStream fis= new FileInputStream(inputFile);
+			 
+
+	            
+	              c = fis.read();
+	               
+	            
+			fis.close();
+		
+		}
+		catch(FileNotFoundException e){
+			  System.err.println("Error: " + e);
+        } catch (IOException e) {
+            System.err.println("Error: " + e);
+        }
+		return c;
+	}
 }
+

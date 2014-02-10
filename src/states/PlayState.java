@@ -1,6 +1,7 @@
 package states;
 
 import java.awt.Font;
+import java.io.*;
 import java.io.InputStream;
 import java.math.*;
 
@@ -218,6 +219,7 @@ public class PlayState extends BasicGameState {
 					&& Mouse.isButtonDown(0)) {
 
 				airspace.setDifficultyValueOfGame(1);
+				score.setDifficulty(1);
 				airspace.getControls().setDifficultyValueOfGame(1);
 				airspace.createAndSetSeparationRules();
 				settingDifficulty = false;
@@ -228,6 +230,7 @@ public class PlayState extends BasicGameState {
 					&& Mouse.isButtonDown(0)) {
 
 				airspace.setDifficultyValueOfGame(2);
+				score.setDifficulty(2);
 				airspace.getControls().setDifficultyValueOfGame(2);
 				airspace.createAndSetSeparationRules();
 				settingDifficulty = false;
@@ -238,6 +241,7 @@ public class PlayState extends BasicGameState {
 					&& Mouse.isButtonDown(0)) {
 
 				airspace.setDifficultyValueOfGame(3);
+				score.setDifficulty(3);
 				airspace.getControls().setDifficultyValueOfGame(3);
 				airspace.createAndSetSeparationRules();
 				settingDifficulty = false;
@@ -288,7 +292,7 @@ public class PlayState extends BasicGameState {
 				gameplayMusic.stop();
 				endOfGameSound.play();
 				sbg.enterState(2);
-				score.addGameOver();
+				writeScore(this.score.calculate());
 				gameEnded = true;
 
 			}
@@ -314,7 +318,7 @@ public class PlayState extends BasicGameState {
 				gameplayMusic.stop();
 				endOfGameSound.play();
 				sbg.enterState(2);
-				score.addGameOver();
+				writeScore(this.score.calculate());
 				gameEnded = true;
 			}
 
@@ -332,6 +336,20 @@ public class PlayState extends BasicGameState {
 		return 1;
 	}
 
+	public void writeScore(int sc){
+		try{
+			File outputFile = new File("Score.txt");
+			FileOutputStream fos= new FileOutputStream(outputFile);
+			fos.write(sc);
+			fos.close();
+		}
+		catch(FileNotFoundException e){
+			  System.err.println("Error: " + e);
+        } catch (IOException e) {
+            System.err.println("Error: " + e);
+        }
+	}
+	
 	public Airspace getAirspace() {
 		return airspace;
 	}

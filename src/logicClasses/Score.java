@@ -6,14 +6,21 @@ public class Score {
 	private double _timePlayed;
 	private double _timeManual;
 	private int _SeparationViolated;
-	private int _gameOvers;
+	private int _difficultyLevel;
+	public int _scalePlus;
+	public int _scaleMinus; 
+
 	
 	public Score(){
 		_timePlayed = 0;
 		_timeManual = 0;
 		_SeparationViolated = 0;
 		_flightsSuccessful = 0;
-		_gameOvers = 0;
+		_difficultyLevel = 1; 
+		_scalePlus = 100;
+		_scaleMinus = 2; 
+		
+
 	}
 
 	public double timePlayed() {
@@ -34,10 +41,7 @@ public class Score {
 		return _SeparationViolated;
 	}
 	
-	public int gameOvers()
-	{
-		return _gameOvers;
-	}
+
 
 	public void addTime(double dt) {
 		_timePlayed += dt;
@@ -55,18 +59,31 @@ public class Score {
 		_flightsSuccessful ++;
 	}
 	
-	public void addGameOver() {
-		_gameOvers ++;
+	public void setDifficulty(int x){
+		_difficultyLevel = x; 
+		if (x == 1){
+			_scalePlus = 100;
+			_scaleMinus = 3;
+		}
+		if (x == 2){
+			_scalePlus = 70;
+			_scaleMinus = 1;
+		}
+		if (x == 3){
+			_scalePlus = 40;
+			_scaleMinus = 1;
+		}
 	}
 	
-	public String calculate() {
+	
+	
+	public int calculate() {
 		int score = 0;
-		score += (int)(_timePlayed);
+		score += (int)(_timePlayed/_scalePlus);
 		score += (100 * _flightsSuccessful);
-		score -= (100 *_SeparationViolated);
+		score -= (_SeparationViolated/_scaleMinus);
 		score -= (int)(_timeManual);
-		score -= (10000 * _gameOvers);
-		return " "+ score;
+		return score;
 	}
 
 }
