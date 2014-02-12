@@ -102,6 +102,13 @@ public class Controls {
 			}
 	}
 	
+	/**
+	 * Handle mouse input to the land and take off buttons
+	 * Behaviour of buttons dependent on flight's landing and take off flags
+	 * Only flights requesting to take off may take off
+	 * Only flights requesting to land may be permitted to land
+	 * Only flights permitted to land may have their landing aborted.
+	 */
 	public void handleLandTakeOffButtons(){
 		
 		int posX=Mouse.getX(); //Get the mouse positions 
@@ -114,21 +121,13 @@ public class Controls {
 		}
 
 		if(posX>10&&posX<150 &&posY>420&&posY<440&&Mouse.isButtonDown(0) && this.selectedFlight.isRequestingToLand() && !landButtonHeldDown){
-			System.out.println("permitted to land");
-			this.selectedFlight.setRequestingToLand(false);
-			this.selectedFlight.setPermittedToLand(true);
-			this.selectedFlight.setTargetAltitude(0);
+			this.selectedFlight.permitToLand();
 			this.landButtonHeldDown = true;
 		} else if (posX>10&&posX<150 &&posY>450&&posY<480&&Mouse.isButtonDown(0) && this.selectedFlight.isRequestingToTakeOff()){
-			this.selectedFlight.setRequestingToTakeOff(false);
-			this.selectedFlight.setPermittedToTakeOff(true);
-			this.selectedFlight.setTargetAltitude(26000);
+			this.selectedFlight.permitTakeOff();
 			System.out.println("permitted to take off");
 		} else if (posX>10&&posX<150 &&posY>420&&posY<440&&Mouse.isButtonDown(0) && this.selectedFlight.isPermittedToLand() && !landButtonHeldDown){
-			System.out.println("aborted landing");
-			this.selectedFlight.setRequestingToLand(true);
-			this.selectedFlight.setPermittedToLand(false);
-			this.selectedFlight.setTargetAltitude(26000);
+			this.selectedFlight.abortLanding();
 			this.landButtonHeldDown = true;
 		}
 	}

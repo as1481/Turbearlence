@@ -18,8 +18,8 @@ public class Flight {
 	private static Image regularFlightImage, selectedFlightInformationBackgroundImage, slowFlightImage, fastFlightImage, shadowImage;
 	private boolean selected;
 	private Airspace airspace;
-	private int changeAltitudeRate = 10;
-	
+	public static final int changeAltitudeRate = 10;
+
 	private boolean requestingToTakeOff = false;
 	private boolean permittedToTakeOff = false;
 	private boolean requestingToLand = false;
@@ -192,6 +192,47 @@ public class Flight {
 
 		return false;
 	}
+	
+	/**
+	 * Permit a flight to land, if it is requesting to do so.
+	 * Flight will be permitted to land and will target altitude 0 to do so.
+	 */
+	public void permitToLand(){
+		if (requestingToLand){
+			System.out.println("permitted to land");
+			this.setRequestingToLand(false);
+			this.setPermittedToLand(true);
+			this.setTargetAltitude(0);
+		}
+	}
+	
+	/**
+	 * Permit a flight to take off, if it is requesting to do so
+	 * Flight will be permitted to take off, and will target altitude = 26,000 ft.
+	 * Frees the runway to allow possibility for a new aircraft to take off next time a flight is spawned
+	 */
+	public void permitTakeOff(){
+		if (requestingToTakeOff){
+			this.setRequestingToTakeOff(false);
+			this.setPermittedToTakeOff(true);
+			this.setTargetAltitude(26000);
+			this.airspace.getAirport().setFlightOnRunway(false);
+			System.out.println("permitted to take off");	
+		}
+	}
+	
+	/**
+	 * Abort an  aircraft's landing
+	 * Aircraft will return to 26,000 ft. and begin requesting to land again.
+	 */
+	public void abortLanding(){
+		if (permittedToLand){
+			System.out.println("aborted landing");
+			this.setRequestingToLand(true);
+			this.setPermittedToLand(false);
+			this.setTargetAltitude(26000);
+		}
+	}
 
 	
 	// DRAWING METHODS
@@ -283,10 +324,10 @@ public class Flight {
 	 * @param g - Graphics libraries required by slick2d.
 	 * @param gc - GameContainer required by slick2d.
 	 */
-	
+	@Deprecated
 	public void drawSelectedFlightInformation(Graphics g, GameContainer gc) {
 		
-		/*Flight.selectedFlightInformationBackgroundImage.draw(0,450);
+		Flight.selectedFlightInformationBackgroundImage.draw(0,450);
 		g.setColor(Color.white);
 		g.drawString(this.flightName,  10, 460);
 		g.drawString("Plan: ",  10, 480);
@@ -304,7 +345,7 @@ public class Flight {
 		g.drawString(Math.round(this.currentHeading) + " DEG",
 			10, 540);
 		g.drawString(Math.round(this.getFlightPlan().getVelocity()) + " MPH",
-			10, 560);*/
+			10, 560);
 		
 	}
 	
@@ -444,8 +485,7 @@ public class Flight {
 			this.requestingToLand = true;
 		}
 	}
-
-
+	
 	// UPDATE, RENDER, INIT
 	
 	/**
@@ -489,10 +529,6 @@ public class Flight {
 		this.drawFlight(g,  gc);
 		this.flightPlan.render(g,gc);
 
-		if(this.selected) {
-			this.drawSelectedFlightInformation(g, gc);
-		}
-		
 	}
 	
 
@@ -623,16 +659,15 @@ public class Flight {
 		return permittedToTakeOff;
 	}
 
-	public void setPermittedToTakeOff(boolean permittedToTakeOff) {
+	private void setPermittedToTakeOff(boolean permittedToTakeOff) {
 		this.permittedToTakeOff = permittedToTakeOff;
-		this.airspace.getAirport().setFlightOnRunway(false);
 	}
 
 	public boolean isRequestingToLand() {
 		return requestingToLand;
 	}
 
-	public void setRequestingToLand(boolean requestingToLand) {
+	private void setRequestingToLand(boolean requestingToLand) {
 		this.requestingToLand = requestingToLand;
 	}
 
