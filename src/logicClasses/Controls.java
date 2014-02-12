@@ -27,6 +27,12 @@ public class Controls {
 	private static Image altitudeButton, changePlanButton, landButton, takeOffButton;
 	private int difficultyValueOfGame; //Sets the difficulty of the control scheme
 	
+	/**
+	 * Track if the landing button is held down
+	 * Used to prevent abort / permit landing cycles while button held down.
+	 */
+	private boolean landButtonHeldDown = false;
+	
 	
 	// CONSTRUCTOR
 	public Controls() {
@@ -103,16 +109,27 @@ public class Controls {
 		
 		posY = 570 - posY; // Mapping Mouse coords onto graphic coords
 		
-		if(posX>10&&posX<150 &&posY>420&&posY<440&&Mouse.isButtonDown(0) && this.selectedFlight.isRequestingToLand()){
+		if(!(posX>10&&posX<150 &&posY>420&&posY<440&&Mouse.isButtonDown(0))){
+			this.landButtonHeldDown = false;
+		}
+
+		if(posX>10&&posX<150 &&posY>420&&posY<440&&Mouse.isButtonDown(0) && this.selectedFlight.isRequestingToLand() && !landButtonHeldDown){
 			System.out.println("permitted to land");
 			this.selectedFlight.setRequestingToLand(false);
 			this.selectedFlight.setPermittedToLand(true);
 			this.selectedFlight.setTargetAltitude(0);
+			this.landButtonHeldDown = true;
 		} else if (posX>10&&posX<150 &&posY>450&&posY<480&&Mouse.isButtonDown(0) && this.selectedFlight.isRequestingToTakeOff()){
 			this.selectedFlight.setRequestingToTakeOff(false);
 			this.selectedFlight.setPermittedToTakeOff(true);
 			this.selectedFlight.setTargetAltitude(26000);
 			System.out.println("permitted to take off");
+		} else if (posX>10&&posX<150 &&posY>420&&posY<440&&Mouse.isButtonDown(0) && this.selectedFlight.isPermittedToLand() && !landButtonHeldDown){
+			System.out.println("aborted landing");
+			this.selectedFlight.setRequestingToLand(true);
+			this.selectedFlight.setPermittedToLand(false);
+			this.selectedFlight.setTargetAltitude(26000);
+			this.landButtonHeldDown = true;
 		}
 	}
 	
@@ -346,7 +363,7 @@ public class Controls {
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 		if(this.selectedFlight != null) {
 			if(!this.selectedFlight.getFlightPlan().getChangingPlan()){
-				g.setColor(Color.white);
+				g.setColor(Color.black);
 				
 				g.drawString("Turn Left:", 10, 125);
 				this.turnLeftTextBox.render(gc, g);
@@ -365,15 +382,19 @@ public class Controls {
 				g.setColor(Color.blue);
 				altitudeButton.draw(0,390);
 				altitudeButton.draw(0,420);
-				g.setColor(Color.white);
+				g.setColor(Color.black);
 				g.drawString("Target: "+this.selectedFlight.getTargetAltitude()+"Ft", 10, 360);
-				if(this.selectedFlight.getTargetAltitude() != Math.round(31000)){
+				
+				if (this.selectedFlight.getAltitude() == 0){
+					g.drawString("Must take off!", 10, 390);
+				}
+				else if(this.selectedFlight.getTargetAltitude() != Math.round(31000)){
 					g.drawString("Increase to "+ (this.selectedFlight.getTargetAltitude()+1000), 10, 390);
 				}
 				else {
 					g.drawString("At max altitude", 10, 390);
 				}
-				if(this.selectedFlight.getTargetAltitude() != Math.round(26000)){
+				if(this.selectedFlight.getTargetAltitude() >= Math.round(26000)){
 					g.drawString("Decrease to "+ (this.selectedFlight.getTargetAltitude()-1000), 10, 420);
 				}
 				else {
@@ -383,6 +404,8 @@ public class Controls {
 				landButton.draw(0, 450);
 				if(this.selectedFlight.isRequestingToLand() == true){
 					g.drawString("Permit to Land", 10, 450);
+				} else if (this.selectedFlight.isPermittedToLand() == true) {
+					g.drawString("Abort Landing", 10, 450);
 				} else {
 					g.drawString("Don't Land", 10, 450);
 				}
@@ -399,13 +422,13 @@ public class Controls {
 			changePlanButton.draw(0,45);
 			changePlanButton.draw(0, 75);
 			if(this.selectedFlight.getFlightPlan().getChangingPlan() == true){
-				g.setColor(Color.white);
+				g.setColor(Color.black);
 				g.drawString("Plan Mode", 10, 45);
 				g.setColor(Color.lightGray);
 				g.drawString("Navigator Mode", 10, 75);
 			}
 			else{
-				g.setColor(Color.white);
+				g.setColor(Color.black);
 				g.drawString("Navigator Mode", 10, 75);
 				g.setColor(Color.lightGray);
 				g.drawString("Plan Mode", 10, 45);
