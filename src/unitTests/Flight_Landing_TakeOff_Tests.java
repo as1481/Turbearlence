@@ -38,15 +38,27 @@ public class Flight_Landing_TakeOff_Tests {
 	@Before
 	public void setUpLanding(){
 		airspaceLanding = new Airspace();
-		//No waypoints, ie. go directly to exit point from entry
+		//Waypoints
+		airspaceLanding.newWaypoint(350, 150, "A");
+    	airspaceLanding.newWaypoint(400, 470, "B");
+    	airspaceLanding.newWaypoint(700, 60,  "C");
+    	airspaceLanding.newWaypoint(800, 320, "D");
+    	airspaceLanding.newWaypoint(600, 418, "E");
+    	airspaceLanding.newWaypoint(500, 220, "F");
+    	airspaceLanding.newWaypoint(950, 188, "G");
+    	airspaceLanding.newWaypoint(1050, 272,"H");
+    	airspaceLanding.newWaypoint(900, 420, "I");
+    	airspaceLanding.newWaypoint(240, 250, "J");
 		//entry point - any which arent a take off point
     	airspaceLanding.newEntryPoint(150, 400);
 		airspaceLanding.newEntryPoint(1200, 200);
 		airspaceLanding.newEntryPoint(600, 0);
+		
 		//exit point - only the landing point
 		airspaceLanding.addExitPoint(airspaceLanding.getAirport().getLandingPoint());
 		
 		flightLanding = new Flight(airspaceLanding);
+
 	}
 	
 	@Test
@@ -68,26 +80,36 @@ public class Flight_Landing_TakeOff_Tests {
 		flightTakeOff.update();
 		//test conditions after one update - flight allowed to take off, no longer requesting to take off
 		// flight should have ascended and moved from initial position.
-		assertTrue(flightTakeOff.getAltitude() == flightTakeOff.changeAltitudeRate);
+		assertTrue(flightTakeOff.getAltitude() == Flight.changeAltitudeRate);
 		assertTrue(flightTakeOff.isRequestingToTakeOff() == false);
 		assertTrue(flightTakeOff.isPermittedToTakeOff() == true);
+		
+		//update a few more times to move flight further
+		for (int i = 0; i<=10; i++){
+			flightTakeOff.update();
+		}
+		//ensure that a flight permitted to take off does move from the airport.
 		assertTrue(oldX != flightTakeOff.getX() && oldY != flightTakeOff.getY());
 	}
 	
 	@Test
-	public void initialLandingConditiond(){
+	public void initialLandingConditions(){
 		//since only exit point is the airport, flight MUST need to land at some point in it's plan.
 		ExitPoint lastWaypoint = flightLanding.getFlightPlan().getExitPoint();
 		double airportX = airspaceLanding.getAirport().getLandingPoint().getX();
 		double airportY = airspaceLanding.getAirport().getLandingPoint().getY();
 		
 		//last waypoint in flight plan should be the airport for landing.
-		assertTrue(lastWaypoint.getX() == airportX && lastWaypoint.getY() == airportY);
+		assertTrue(lastWaypoint.getX() == airportX);
 	}
 	
 	@Test
 	public void checkRequestToLand(){
-		//update once. updateRequiredToLand() in update() should notice that target is the landing exit point.
+		//update until target waypoint is the landing exit point
+		while(flightLanding.getFlightPlan().getPointByIndex(0) != flightLanding.getFlightPlan().getExitPoint()){
+			flightLanding.update();
+		}
+		//update once further, so flight notices the next target is the landing exit point via updateRequiredToLand
 		flightLanding.update();
 		//since target is exit point, and target is the airport landing point, flight must be requesting to land
 		assertTrue(flightLanding.isRequestingToLand() == true);
@@ -96,7 +118,14 @@ public class Flight_Landing_TakeOff_Tests {
 	}
 	
 	@Test
-	public void permitToLand(){
+	public void checkPermitToLand(){
+		//update until target waypoint is the landing exit point
+		while(flightLanding.getFlightPlan().getPointByIndex(0) != flightLanding.getFlightPlan().getExitPoint()){
+			flightLanding.update();
+		}
+		//update once further, so flight notices the next target is the landing exit point via updateRequiredToLand
+		flightLanding.update();
+		
 		//permit flight to land.
 		flightLanding.permitToLand();
 		//flight is now permitted to land
