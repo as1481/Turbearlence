@@ -23,8 +23,8 @@ public class ControlsState extends BasicGameState {
 		try{
 			pageNumber = 1;
 			
-			controlsBackgroundPage1 = new Image("res/menu_graphics/controls1.jpg");
-			controlsBackgroundPage2 = new Image("res/menu_graphics/controls2.jpg");
+			controlsBackgroundPage1 = new Image("res/menu_graphics/controls1.png");
+			controlsBackgroundPage2 = new Image("res/menu_graphics/controls2.png");
 			backButton = new Image("res/menu_graphics/back.png");
 			backButtonHover = new Image("res/menu_graphics/back_hover.png");
 			nextPageButton = new Image("res/menu_graphics/next page.png");
