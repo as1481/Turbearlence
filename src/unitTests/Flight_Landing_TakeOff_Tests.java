@@ -65,9 +65,15 @@ public class Flight_Landing_TakeOff_Tests {
 	public void initialTakeOffConditions(){
 		//since only entry point is the airport, the flight MUST have generated on the runway
 		//Testing inital conditions for a flight which must take off
+		
+		//Flight must be at ground level ie on the runway
 		assertTrue(flightTakeOff.getAltitude() == 0);
+		//Flight must be requesting to take off
 		assertTrue(flightTakeOff.isRequestingToTakeOff() == true);
+		//Flight must not yet be permitted to take off
 		assertTrue(flightTakeOff.isPermittedToTakeOff() == false);
+		//The Airport should have raised the flight on runway flag.
+		assertTrue(airspaceTakeOff.getAirport().isFlightOnRunway() == true);
 	}
 	
 	@Test
@@ -83,12 +89,14 @@ public class Flight_Landing_TakeOff_Tests {
 		assertTrue(flightTakeOff.getAltitude() == Flight.changeAltitudeRate);
 		assertTrue(flightTakeOff.isRequestingToTakeOff() == false);
 		assertTrue(flightTakeOff.isPermittedToTakeOff() == true);
+		//there should no longer be a flight on the runway
+		assertTrue(airspaceTakeOff.getAirport().isFlightOnRunway() == false);
 		
 		//update a few more times to move flight further
 		for (int i = 0; i<=10; i++){
 			flightTakeOff.update();
 		}
-		//ensure that a flight permitted to take off does move from the airport.
+		//ensure that a flight permitted to take off moves from the airport.
 		assertTrue(oldX != flightTakeOff.getX() && oldY != flightTakeOff.getY());
 	}
 	
