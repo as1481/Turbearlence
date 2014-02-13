@@ -108,7 +108,7 @@ public class Flight_Landing_TakeOff_Tests {
 		double airportY = airspaceLanding.getAirport().getLandingPoint().getY();
 		
 		//last waypoint in flight plan should be the airport for landing.
-		assertTrue(lastWaypoint.getX() == airportX);
+		assertTrue(lastWaypoint.getX() == airportX && lastWaypoint.getY() == airportY);
 	}
 	
 	@Test
