@@ -24,9 +24,9 @@ public class ExitPoint extends Point {
 	
 	public void init(GameContainer gc) throws SlickException {
 
-		    this.exitPointTop = new Image("res/graphics/exitpoint_top.png");
-			this.exitPointRight = new Image("res/graphics/exitpoint_right.png");
-			this.exitPointLeft = new Image("res/graphics/exitpoint_left.png");	
+			ExitPoint.exitPointTop = new Image("res/graphics/exitpoint_top.png");
+			ExitPoint.exitPointRight = new Image("res/graphics/exitpoint_right.png");
+			ExitPoint.exitPointLeft = new Image("res/graphics/exitpoint_left.png");	
 		}
 	
 	/**
@@ -39,18 +39,18 @@ public class ExitPoint extends Point {
 	public void render(Graphics g, Airspace airspace) throws SlickException {
 		
 		if(this.y == 0){
-			this.exitPointTop.draw((int)this.x-20, (int)this.y);
+			ExitPoint.exitPointTop.draw((int)this.x-20, (int)this.y);
 		}
 		
 		else if(this.x == 150){
-			this.exitPointLeft.draw((int)this.x, (int)this.y-20);
+			ExitPoint.exitPointLeft.draw((int)this.x, (int)this.y-20);
 		}
 		
 		else if(this.x == 1200){
-			this.exitPointRight.draw((int)this.x-40, (int)this.y-20);
+			ExitPoint.exitPointRight.draw((int)this.x-40, (int)this.y-20);
 		} 
 		else {
-			this.exitPointLeft.draw((int) this.x+20, (int) this.y-20);
+			ExitPoint.exitPointLeft.draw((int) this.x+20, (int) this.y-20);
 		}
 		
 		

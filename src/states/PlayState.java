@@ -3,7 +3,6 @@ package states;
 import java.awt.Font;
 import java.io.*;
 import java.io.InputStream;
-import java.math.*;
 
 import logicClasses.Airspace;
 import logicClasses.Score;
@@ -149,6 +148,7 @@ public class PlayState extends BasicGameState {
 			} else {
 				hardButton.draw(100, 500);
 			}
+			
 		}
 
 		else {
@@ -246,6 +246,14 @@ public class PlayState extends BasicGameState {
 				airspace.createAndSetSeparationRules();
 				settingDifficulty = false;
 
+			}
+			
+			Input input = gc.getInput();
+			if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+				airspace.resetAirspace();
+				gameplayMusic.stop();
+				gameEnded = true;
+				sbg.enterState(0);
 			}
 
 		}

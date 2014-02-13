@@ -22,9 +22,9 @@ public class EntryPoint extends Point {
      * @throws SlickException
      */
     	
-    	this.entryPointTop = new Image("res/graphics/entrypoint_top.png");
-		this.entryPointRight = new Image("res/graphics/entrypoint_right.png");
-		this.entryPointLeft = new Image("res/graphics/entrypoint_left.png");
+    	EntryPoint.entryPointTop = new Image("res/graphics/entrypoint_top.png");
+    	EntryPoint.entryPointRight = new Image("res/graphics/entrypoint_right.png");
+		EntryPoint.entryPointLeft = new Image("res/graphics/entrypoint_left.png");
 
 	}
     
@@ -37,17 +37,17 @@ public class EntryPoint extends Point {
 	public void render(Graphics g) throws SlickException {
 		
 		if(this.y == 0){
-			this.entryPointTop.draw((int)this.x-20, (int) this.y);
+			entryPointTop.draw((int)this.x-20, (int) this.y);
 		}
 		
 		else if(this.x == 150){
-			this.entryPointLeft.draw((int)this.x, (int) this.y-20);
+			entryPointLeft.draw((int)this.x, (int) this.y-20);
 		}
 		
 		else if(this.x == 1200){
-			this.entryPointRight.draw((int)this.x-40, (int) this.y-20);
+			entryPointRight.draw((int)this.x-40, (int) this.y-20);
 		} else {
-			this.entryPointLeft.draw((int) this.x-80, (int) this.y-20);
+			entryPointLeft.draw((int) this.x-80, (int) this.y-20);
 		}
     }
 	
