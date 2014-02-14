@@ -57,7 +57,7 @@ public class Waypoint extends Point {
 		    	
 	    	}
 	    	g.setColor(Color.black);
-	    	g.drawString(this.pointRef, (int)this.x-3, (int)this.y-9);
+	    	g.drawString(this.pointRef, (int)this.x-3, (int)this.y-4);
 		
 	    }
 	
