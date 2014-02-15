@@ -3,7 +3,10 @@ package states;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
@@ -15,6 +18,8 @@ public class GameOverState extends BasicGameState {
 	
 	private static Image gameOverBackground, playAgainButton, quitButton, menuButton;
 	private static Image playAgainHover, quitHover, menuHover;
+	public File ScoreFile = new File("Scores.txt");
+	int HighScore[] = new int[]{0,0,0};
 	
 	public GameOverState(int state) {
 		
@@ -30,6 +35,7 @@ public class GameOverState extends BasicGameState {
 		playAgainHover = new Image("res/menu_graphics/playagain_hover.png");
 		quitHover = new Image("res/menu_graphics/quit_hover.png");
 		menuHover = new Image("res/menu_graphics/menu_hover.png");
+		
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -61,7 +67,13 @@ public class GameOverState extends BasicGameState {
 		}
 		
 		g.setColor(Color.white);
-		g.drawString("Score:" + getScore(), 550, 550);
+		g.drawString("Score:" + getScore(), 550, 500);
+		updateHighScore(getScore());
+		g.drawString("High Scores:", 100,100);
+		g.drawString( "Beartacular: "+ HighScore[0], 100, 120);
+		g.drawString( "Beary good: "+ HighScore[1], 100, 140);
+		g.drawString( "Appawling: "+ HighScore[2], 100, 160);
+		
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)throws SlickException {
@@ -113,6 +125,45 @@ public class GameOverState extends BasicGameState {
             System.err.println("Error: " + e);
         }
 		return c;
+	}
+	
+	
+	public void getHighScore(){
+		try{
+		
+		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(ScoreFile));
+		HighScore = (int[])inputStream.readObject();
+		inputStream.close();
+		}
+		catch(FileNotFoundException e){
+			  System.err.println("Error: " + e);
+      } catch (IOException e) {
+          System.err.println("Error: " + e);
+      } catch (ClassNotFoundException e) {
+    	  System.err.println("Error: "+ e);
+      }
+	}
+	
+	public void updateHighScore(int newS){
+		getHighScore();	
+		for (int i = 0; i < 3; i++){
+			if (newS >= HighScore[i]){
+				HighScore[i] = newS; 
+				i = 4; 
+			}
+		}
+			
+		try{
+		ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(ScoreFile));
+		outputStream.writeObject(HighScore);
+		outputStream.close();
+		
+		}
+		catch(FileNotFoundException e){
+			  System.err.println("Error: " + e);
+      } catch (IOException e) {
+          System.err.println("Error: " + e);
+      }
 	}
 }
 
