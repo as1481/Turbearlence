@@ -10,13 +10,12 @@ import stateContainer.Game;
 
 
 public class MenuState extends BasicGameState {
+	
 	public static TrueTypeFont font;
 	private static Image creditsHover, controlsHover, menuBackground, playButton, quitButton, playHover, quitHover, creditsButton, controlsButton;
 	private boolean mouseBeenReleased;
-	
-	private final static int stateMenu = 9;
 
-
+	//  CONSTRUCTOR
 	public MenuState(int state) {
 		this.mouseBeenReleased=false;
 	}
@@ -37,6 +36,8 @@ public class MenuState extends BasicGameState {
 
 	}
 
+	//  RENDER AND UPDATE
+	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		g.setColor(Color.white);

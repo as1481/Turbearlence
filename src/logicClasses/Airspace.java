@@ -24,7 +24,6 @@ public class Airspace {
 	private Airport airport;
 	private int difficultyValueOfGame; 
 	private Controls controls;
-	private EntryPoint airportEntry;
 	private int warnings;
 	
 	// CONSTRUCTOR

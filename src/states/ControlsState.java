@@ -107,11 +107,6 @@ public class ControlsState extends BasicGameState {
 		
 		posY = 600 - posY;
 		
-		Input input = gc.getInput();
-		
-
-		
-		
 		if((posX > 20 && posX < 40) && (posY > 20 && posY < 40)) {
 			if(Mouse.isButtonDown(0)) {
 				pageNumber = 1;

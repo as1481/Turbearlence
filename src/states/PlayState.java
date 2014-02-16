@@ -19,7 +19,6 @@ import org.newdawn.slick.Image;
 public class PlayState extends BasicGameState {
 
 	private Airspace airspace;
-	private int i;
 	Image cursorImg;
 	public static float time;
 	private Sound endOfGameSound;
@@ -51,7 +50,6 @@ public class PlayState extends BasicGameState {
 		time = 0;
 		score = new Score();
 		airspace = new Airspace();
-		i = 1;
 		this.stringTime = "";
 
 		gc.setAlwaysRender(true);
