@@ -19,7 +19,7 @@ public class GameOverState extends BasicGameState {
 	private static Image gameOverBackground, playAgainButton, quitButton, menuButton;
 	private static Image playAgainHover, quitHover, menuHover;
 	public File ScoreFile = new File("Scores.txt");
-	int HighScore[] = new int[]{0,0,0};
+	int highScore[] = new int[]{0,0,0};
 	
 	public GameOverState(int state) {
 		
@@ -70,9 +70,9 @@ public class GameOverState extends BasicGameState {
 		g.drawString("Score:" + getScore(), 550, 500);
 		updateHighScore(getScore());
 		g.drawString("High Scores:", 100,100);
-		g.drawString( "Beartacular: "+ HighScore[0], 100, 120);
-		g.drawString( "Beary good: "+ HighScore[1], 100, 140);
-		g.drawString( "Appawling: "+ HighScore[2], 100, 160);
+		g.drawString( "Beartacular: "+ highScore[0], 100, 120);
+		g.drawString( "Beary good: "+ highScore[1], 100, 140);
+		g.drawString( "Appawling: "+ highScore[2], 100, 160);
 		
 	}
 
@@ -132,7 +132,7 @@ public class GameOverState extends BasicGameState {
 		try{
 		
 		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(ScoreFile));
-		HighScore = (int[])inputStream.readObject();
+		highScore = (int[])inputStream.readObject();
 		inputStream.close();
 		}
 		catch(FileNotFoundException e){
@@ -147,15 +147,17 @@ public class GameOverState extends BasicGameState {
 	public void updateHighScore(int newS){
 		getHighScore();	
 		for (int i = 0; i < 3; i++){
-			if (newS >= HighScore[i]){
-				HighScore[i] = newS; 
-				i = 4; 
+			if (newS >= highScore[i]){
+				int temp = highScore[i];
+				highScore[i] = newS; 
+				newS = temp;
+				i = 0; 
 			}
 		}
 			
 		try{
 		ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(ScoreFile));
-		outputStream.writeObject(HighScore);
+		outputStream.writeObject(highScore);
 		outputStream.close();
 		
 		}
