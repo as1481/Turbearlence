@@ -106,6 +106,10 @@ public class GameOverState extends BasicGameState {
 			return 2;
 	}
 	
+	/**
+	 * Gets the score from the last game session. This is used to update the high score list
+	 * @return the score from the last game session
+	 */
 	public int getScore(){
 		int c = 0;
 		try{
@@ -128,12 +132,14 @@ public class GameOverState extends BasicGameState {
 		return c;
 	}
 	
-	
+	/**
+	 * Gets and stores the list of current high scores in the highScore array.
+	 */
 	public void getHighScore(){
 		try{
 		
 		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(ScoreFile));
-		highScore = (int[])inputStream.readObject();
+		highScore = (int[])inputStream.readObject(); // read in the list of high scores
 		inputStream.close();
 		}
 		catch(FileNotFoundException e){
@@ -145,18 +151,23 @@ public class GameOverState extends BasicGameState {
       }
 	}
 	
+	/**
+	 * Updates the list of high scores
+	 * @param newS the new score to be checked against the list of high scores
+	 */
 	public void updateHighScore(int newS){
-		getHighScore();	
+		getHighScore();	//get the high scores
+		//check newS versus the high score list
 		for (int i = 0; i < 3; i++){
-			if (newS > highScore[i]){
-				int temp = highScore[i];
-				highScore[i] = newS; 
+			if (newS > highScore[i]){ // newS to be added to the high scores
+				int temp = highScore[i]; // store the old high score temporarily
+				highScore[i] = newS; //replace the old high score
 				newS = temp;
-				i = 0; 
+				i = 0;  //check again with the old score, shuffling it down the list
 			}
 		}
 			
-		try{
+		try{ // write the high scores back to the file
 		ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(ScoreFile));
 		outputStream.writeObject(highScore);
 		outputStream.close();
