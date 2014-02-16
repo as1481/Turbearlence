@@ -23,6 +23,73 @@ public class Score {
 
 	}
 
+	/**
+	 * Add time to the time played variable
+	 * @param dt the time to be added
+	 */
+	public void addTime(double dt) {
+		_timePlayed += dt;
+	}
+	
+	/**
+	 * Add time to the time a flight has been under manual control
+	 * @param dt the time to be added
+	 */
+	public void addTimeManual(double dt) {
+		_timeManual += dt;
+	}
+	
+	/**
+	 * Add time to the time separation rules have been violated
+	 * @param dt the time to add
+	 */
+	public void addSeparationViolated(int dt) {
+		_SeparationViolated += dt;
+	}
+	
+	/**
+	 * Increment the number of successful flights.
+	 */
+	public void addFlight() {
+		_flightsSuccessful ++;
+	}
+	
+	/**
+	 * Set the difficulty modifier
+	 * @param x the difficulty selected
+	 */
+	public void setDifficulty(int x){
+		_difficultyLevel = x; 
+		if (x == 1){
+			_scalePlus = 100;
+			_scaleMinus = 3;
+		}
+		if (x == 2){
+			_scalePlus = 70;
+			_scaleMinus = 1;
+		}
+		if (x == 3){
+			_scalePlus = 40;
+			_scaleMinus = 1;
+		}
+	}
+	
+	
+	/**
+	 * Calculate the score from the current score variables
+	 * @return the score at the current time
+	 */
+	public int calculate() {
+		int score = 0;
+		score += (int)(_timePlayed/_scalePlus);
+		score += (100 * _flightsSuccessful);
+		score -= (_SeparationViolated/_scaleMinus);
+		score -= (int)(_timeManual);
+		return score;
+	}
+	
+	/// ACCESSORS
+	
 	public double timePlayed() {
 		return _timePlayed;
 	}
@@ -41,49 +108,5 @@ public class Score {
 		return _SeparationViolated;
 	}
 	
-
-
-	public void addTime(double dt) {
-		_timePlayed += dt;
-	}
-	
-	public void addTimeManual(double dt) {
-		_timeManual += dt;
-	}
-	
-	public void addSeparationViolated(int dt) {
-		_SeparationViolated += dt;
-	}
-
-	public void addFlight() {
-		_flightsSuccessful ++;
-	}
-	
-	public void setDifficulty(int x){
-		_difficultyLevel = x; 
-		if (x == 1){
-			_scalePlus = 100;
-			_scaleMinus = 3;
-		}
-		if (x == 2){
-			_scalePlus = 70;
-			_scaleMinus = 1;
-		}
-		if (x == 3){
-			_scalePlus = 40;
-			_scaleMinus = 1;
-		}
-	}
-	
-	
-	
-	public int calculate() {
-		int score = 0;
-		score += (int)(_timePlayed/_scalePlus);
-		score += (100 * _flightsSuccessful);
-		score -= (_SeparationViolated/_scaleMinus);
-		score -= (int)(_timeManual);
-		return score;
-	}
 
 }
