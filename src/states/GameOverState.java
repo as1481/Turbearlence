@@ -20,6 +20,7 @@ public class GameOverState extends BasicGameState {
 	private static Image playAgainHover, quitHover, menuHover;
 	public File ScoreFile = new File("Scores.txt");
 	int highScore[] = new int[]{0,0,0};
+	int score;
 	
 	public GameOverState(int state) {
 		
@@ -35,7 +36,8 @@ public class GameOverState extends BasicGameState {
 		playAgainHover = new Image("res/menu_graphics/playagain_hover.png");
 		quitHover = new Image("res/menu_graphics/quit_hover.png");
 		menuHover = new Image("res/menu_graphics/menu_hover.png");
-		
+		score = getScore();
+		updateHighScore(score);
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -67,8 +69,7 @@ public class GameOverState extends BasicGameState {
 		}
 		
 		g.setColor(Color.white);
-		g.drawString("Score:" + getScore(), 550, 500);
-		updateHighScore(getScore());
+		g.drawString("Score:" + score, 550, 500);
 		g.drawString("High Scores:", 100,100);
 		g.drawString( "Beartacular: "+ highScore[0], 100, 120);
 		g.drawString( "Beary good: "+ highScore[1], 100, 140);
