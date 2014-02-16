@@ -147,7 +147,7 @@ public class GameOverState extends BasicGameState {
 	public void updateHighScore(int newS){
 		getHighScore();	
 		for (int i = 0; i < 3; i++){
-			if (newS >= highScore[i]){
+			if (newS > highScore[i]){
 				int temp = highScore[i];
 				highScore[i] = newS; 
 				newS = temp;
