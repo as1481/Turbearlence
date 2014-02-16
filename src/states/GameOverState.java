@@ -18,7 +18,7 @@ public class GameOverState extends BasicGameState {
 	
 	private static Image gameOverBackground, playAgainButton, quitButton, menuButton;
 	private static Image playAgainHover, quitHover, menuHover;
-	public File ScoreFile = new File("Scores.txt");
+	public File scoreFile = new File("Scores.txt");
 	int highScore[] = new int[]{0,0,0};
 	int score;
 	
@@ -138,7 +138,7 @@ public class GameOverState extends BasicGameState {
 	public void getHighScore(){
 		try{
 		
-		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(ScoreFile));
+		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(scoreFile));
 		highScore = (int[])inputStream.readObject(); // read in the list of high scores
 		inputStream.close();
 		}
@@ -168,7 +168,7 @@ public class GameOverState extends BasicGameState {
 		}
 			
 		try{ // write the high scores back to the file
-		ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(ScoreFile));
+		ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(scoreFile));
 		outputStream.writeObject(highScore);
 		outputStream.close();
 		

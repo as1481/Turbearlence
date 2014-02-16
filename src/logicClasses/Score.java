@@ -3,22 +3,22 @@ package logicClasses;
 public class Score {
 	
 	private int _flightsSuccessful;
-	private double _timePlayed;
-	private double _timeManual;
-	private int _SeparationViolated;
-	private int _difficultyLevel;
-	public int _scalePlus;
-	public int _scaleMinus; 
+	private double timePlayed;
+	private double timeManual;
+	private int SeparationViolated;
+	private int difficultyLevel;
+	public int scalePlus;
+	public int scaleMinus; 
 
 	
 	public Score(){
-		_timePlayed = 0;
-		_timeManual = 0;
-		_SeparationViolated = 0;
+		timePlayed = 0;
+		timeManual = 0;
+		SeparationViolated = 0;
 		_flightsSuccessful = 0;
-		_difficultyLevel = 1; 
-		_scalePlus = 100;
-		_scaleMinus = 2; 
+		difficultyLevel = 1; 
+		scalePlus = 100;
+		scaleMinus = 2; 
 		
 
 	}
@@ -28,7 +28,7 @@ public class Score {
 	 * @param dt the time to be added
 	 */
 	public void addTime(double dt) {
-		_timePlayed += dt;
+		timePlayed += dt;
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class Score {
 	 * @param dt the time to be added
 	 */
 	public void addTimeManual(double dt) {
-		_timeManual += dt;
+		timeManual += dt;
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class Score {
 	 * @param dt the time to add
 	 */
 	public void addSeparationViolated(int dt) {
-		_SeparationViolated += dt;
+		SeparationViolated += dt;
 	}
 	
 	/**
@@ -59,18 +59,18 @@ public class Score {
 	 * @param x the difficulty selected
 	 */
 	public void setDifficulty(int x){
-		_difficultyLevel = x; 
+		difficultyLevel = x; 
 		if (x == 1){
-			_scalePlus = 100;
-			_scaleMinus = 3;
+			scalePlus = 100;
+			scaleMinus = 3;
 		}
 		if (x == 2){
-			_scalePlus = 70;
-			_scaleMinus = 1;
+			scalePlus = 70;
+			scaleMinus = 1;
 		}
 		if (x == 3){
-			_scalePlus = 40;
-			_scaleMinus = 1;
+			scalePlus = 40;
+			scaleMinus = 1;
 		}
 	}
 	
@@ -81,17 +81,17 @@ public class Score {
 	 */
 	public int calculate() {
 		int score = 0;
-		score += (int)(_timePlayed/_scalePlus);
+		score += (int)(timePlayed/scalePlus);
 		score += (100 * _flightsSuccessful);
-		score -= (_SeparationViolated/_scaleMinus);
-		score -= (int)(_timeManual);
+		score -= (SeparationViolated/scaleMinus);
+		score -= (int)(timeManual);
 		return score;
 	}
 	
 	/// ACCESSORS
 	
 	public double timePlayed() {
-		return _timePlayed;
+		return timePlayed;
 	}
 
 	public int flightsSuccessful() {
@@ -100,12 +100,12 @@ public class Score {
 	
 	public double manualTime()
 	{
-		return _timeManual;
+		return timeManual;
 	}
 	
 	public int SeparationViolated()
 	{
-		return _SeparationViolated;
+		return SeparationViolated;
 	}
 	
 
