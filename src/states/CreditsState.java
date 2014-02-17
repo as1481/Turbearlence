@@ -51,8 +51,8 @@ public class CreditsState extends BasicGameState {
 		String MusicAssetsL4 = "http://creativecommons.org/licenses/by/3.0/";
 		
 		String Title2 = "Images";
-		String Image2 = "Background image attirubted to Ian Macky (ian.macky.net)";
-		String Image3 = "";
+		String Image2 = "Background image attirubted to Rijksdienst voor het Cultureel Erfgoed";
+		String Image3 = "This files are licensed under the Creative Commons Attribution-Share Alike 3.0 Netherlands license.";
 		
 		String Image4 = "Clouds image attirubted to Keith Pomakis";
 		
