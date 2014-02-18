@@ -33,7 +33,6 @@ public class MenuState extends BasicGameState {
 		controlsButton = new Image("res/menu_graphics/controls_silver.png");
 		controlsHover = new Image("res/menu_graphics/controls_hover.png");
 
-
 	}
 
 	//  RENDER AND UPDATE

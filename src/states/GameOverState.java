@@ -95,10 +95,7 @@ public class GameOverState extends BasicGameState {
 		if((posX > 1150 && posX < 1170) && (posY > 550 && posY < 580)) {
 			if(Mouse.isButtonDown(0)) {
 				System.exit(0);
-			}
-			
-		}
-		else {
+			}	
 		}
 	}
 
@@ -115,12 +112,9 @@ public class GameOverState extends BasicGameState {
 		try{
 			File inputFile = new File("Score.txt");
 			FileInputStream fis= new FileInputStream(inputFile);
-			 
 
-	            
 	              c = fis.read();
-	               
-	            
+
 			fis.close();
 		
 		}

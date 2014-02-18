@@ -58,6 +58,7 @@ public class Controls {
 		this.turnLeftTextBox.setMaxLength(3); //Makes sure that user cannot enter more than three letters as a heading (360 is max)
 		this.turnRightTextBox.setMaxLength(3);
 		this.headingControlTextBox.setMaxLength(3);
+		// set up images to be used for buttons
 		altitudeButton = new Image("res/graphics/altitudebutton.png");
 		changePlanButton = new Image("res/graphics/altitudebutton.png"); // same as altitude button
 		landButton = new Image("res/graphics/altitudebutton.png"); // same as altitude button
@@ -90,7 +91,7 @@ public class Controls {
 
 		
 			if(posX>10&&posX<150&&posY<410&&posY>390&&Mouse.isButtonDown(0)) { //Is the mouse position in the area enclosed by the increase altitude button and is the button being held down?
-				if(this.selectedFlight.getTargetAltitude() < MAXIMUMALTITUDE) { //Is the target altitude already at the maximum value?
+				if(this.selectedFlight.getTargetAltitude() < MAXIMUMALTITUDE && !this.selectedFlight.isPermittedToLand()) { //Is the target altitude already at the maximum value?
 					this.selectedFlight.setTargetAltitude(this.selectedFlight.getTargetAltitude()+1000); //Set the target altitude 1000 higher
 				}
 			}
@@ -116,18 +117,20 @@ public class Controls {
 		
 		posY = 570 - posY; // Mapping Mouse coords onto graphic coords
 		
-		if(!(posX>10&&posX<150 &&posY>420&&posY<440&&Mouse.isButtonDown(0))){
-			this.landButtonHeldDown = false;
+		if(!Mouse.isButtonDown(0)){
+			//if the mouse is not clicked down, do nothing.
+			return;
 		}
 
-		if(posX>10&&posX<150 &&posY>420&&posY<440&&Mouse.isButtonDown(0) && this.selectedFlight.isRequestingToLand() && !landButtonHeldDown){
+		if(posX>10&&posX<150 &&posY>420&&posY<440 && this.selectedFlight.isRequestingToLand() && !landButtonHeldDown){
 			this.selectedFlight.permitToLand();
+			//set the landButtonHeldDown flag to avoid flipping between permit and abort landing while mouse is down.
 			this.landButtonHeldDown = true;
-		} else if (posX>10&&posX<150 &&posY>450&&posY<480&&Mouse.isButtonDown(0) && this.selectedFlight.isRequestingToTakeOff()){
+		} else if (posX>10&&posX<150 &&posY>450&&posY<480 && this.selectedFlight.isRequestingToTakeOff()){
 			this.selectedFlight.permitTakeOff();
-			System.out.println("permitted to take off");
-		} else if (posX>10&&posX<150 &&posY>420&&posY<440&&Mouse.isButtonDown(0) && this.selectedFlight.isPermittedToLand() && !landButtonHeldDown){
+		} else if (posX>10&&posX<150 &&posY>420&&posY<440 && this.selectedFlight.isPermittedToLand() && !landButtonHeldDown){
 			this.selectedFlight.abortLanding();
+			//set the landButtonHeldDown flag to avoid flipping between permit and abort landing while mouse is down.
 			this.landButtonHeldDown = true;
 		}
 	}
@@ -182,7 +185,7 @@ public class Controls {
 		// Working out nearest flight to click
 		
 		if(airspace.getListOfFlights().size()>=1){ //If there is more than one flight in the airspace
-			//DONT PANIC, just pythagoras 
+			//Use pythagoras rule to get the minimum distance between the mouse click location and the flight.
 			minimumDistanceBetweenFlightAndMouseClick = Math.sqrt(Math.pow(pointX-airspace.getListOfFlights().get(0).getX(), 2)+Math.pow(pointY-airspace.getListOfFlights().get(0).getY(), 2));
 			nearestFlight = airspace.getListOfFlights().get(0);
 			indexOfNearestFlightInAirspaceListOfFlights = 0;
@@ -363,7 +366,7 @@ public class Controls {
 		if(this.selectedFlight != null) {
 			if(!this.selectedFlight.getFlightPlan().getChangingPlan()){
 				g.setColor(Color.black);
-				
+				//draw labels next to text input boxes and the boxes themselves
 				g.drawString("Turn Left:", 10, 125);
 				this.turnLeftTextBox.render(gc, g);
 				g.drawString("DEG", 114, 153);
@@ -376,19 +379,22 @@ public class Controls {
 				this.turnRightTextBox.render(gc, g);
 				g.drawString("DEG", 114, 294);
 				
-				
+				//draw altitude change buttons
 				g.drawString("Change Altitude:", 10, 330);
-				g.setColor(Color.blue);
 				altitudeButton.draw(0,390);
 				altitudeButton.draw(0,420);
-				g.setColor(Color.black);
+				
+				//draw the target altitude of the selected flight
 				g.drawString("Target: "+this.selectedFlight.getTargetAltitude()+"Ft", 10, 360);
 				
+				//draw labels on to altitude buttons
 				if (this.selectedFlight.getAltitude() == 0){
 					g.drawString("Must take off!", 10, 390);
 				}
-				else if(this.selectedFlight.getTargetAltitude() != Math.round(31000)){
+				else if(this.selectedFlight.getTargetAltitude() != Math.round(31000) && !this.selectedFlight.isPermittedToLand()){
 					g.drawString("Increase to "+ (this.selectedFlight.getTargetAltitude()+1000), 10, 390);
+				} else if(this.selectedFlight.isPermittedToLand()){
+					g.drawString("Landing!", 10, 390);
 				}
 				else {
 					g.drawString("At max altitude", 10, 390);
@@ -400,7 +406,11 @@ public class Controls {
 					g.drawString("At min altitude", 10, 420);
 				}
 				
+				//draw the buttons for landing and taking off
 				landButton.draw(0, 450);
+				takeOffButton.draw(0, 480);
+				
+				//draw the label for the landing button
 				if(this.selectedFlight.isRequestingToLand() == true){
 					g.drawString("Permit to Land", 10, 450);
 				} else if (this.selectedFlight.isPermittedToLand() == true) {
@@ -408,7 +418,8 @@ public class Controls {
 				} else {
 					g.drawString("Don't Land", 10, 450);
 				}
-				takeOffButton.draw(0, 480);
+				
+				//draw the lavel for the take off button
 				if(this.selectedFlight.isRequestingToTakeOff() == true){
 					g.drawString("Permit to Take Off", 10, 480);
 				} else {
@@ -418,6 +429,7 @@ public class Controls {
 				
 				
 				}
+			//draw and label the navigator and plan mode buttons
 			changePlanButton.draw(0,45);
 			changePlanButton.draw(0, 75);
 			if(this.selectedFlight.getFlightPlan().getChangingPlan() == true){
@@ -499,13 +511,16 @@ public class Controls {
 		
 		}
 		
+		//OTHER MOUSE INPUT
+		//check if mouse input selected a flight
 		if(Mouse.isButtonDown(0)){
 			this.checkSelected(posX,posY,airspace);
 			}
-		
+		//Handle mouse being released
 		if(!Mouse.isButtonDown(0)){
 			this.mouseHeldDownOnFlight = false;
 			this.mouseHeldDownOnAltitudeButton = false;
+			this.landButtonHeldDown = false;
 		}
 		
 		if (!Mouse.isButtonDown(1)){

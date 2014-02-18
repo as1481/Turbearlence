@@ -40,7 +40,6 @@ public class Flight {
 			this.targetAltitude = Controls.MINIMUMALTITUDE;
 			this.requestingToTakeOff = true;
 			airspace.getAirport().setFlightOnRunway(true);
-			System.out.println("Flight taking off");
 		} else {
 			this.currentAltitude = generateAltitude();
 			//else randomise altitude
@@ -72,7 +71,7 @@ public class Flight {
 		case 2:
 			return 30000;
 		}
-		return 27000; // Default state (this won't ever be returned)
+		return 27000; // Default state (this should not be returned)
 	}
 
 	/**
@@ -321,6 +320,7 @@ public class Flight {
 	
 	/**
 	 * drawSelectedFlightInformation: draws the selected flight's information in the bottom left hand corner.
+	 * No longer used as space for flight information is now used for landing and take off buttons.
 	 * @param g - Graphics libraries required by slick2d.
 	 * @param gc - GameContainer required by slick2d.
 	 */
@@ -372,12 +372,12 @@ public class Flight {
 	 * target altitude are the same, do nothing.
 	 */
 	
-	public void updateAltitude() {
+	public void updateAltitude() { //descend
 		if (this.currentAltitude > this.targetAltitude) {
 			this.currentAltitude -= changeAltitudeRate;
 		}
 
-		else if (this.currentAltitude < this.targetAltitude) {
+		else if (this.currentAltitude < this.targetAltitude) { //ascend
 			this.currentAltitude += changeAltitudeRate;
 		}
 	}

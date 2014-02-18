@@ -107,24 +107,20 @@ public class PauseState extends BasicGameState {
 			pageNumber = 1;
 			sbg.enterState(1);
 		}
-		
-		
+
 		if((posX > 20 && posX < 40) && (posY > 20 && posY < 40)) {
 						
 			if(Mouse.isButtonDown(0)) {
 				pageNumber = 1;
 				sbg.enterState(1);
 			}
-			
 		}
-		
-		
+
 		if((posX > 1150 && posX < 1170) && (posY > 550 && posY < 580)) {
 			
 			if(Mouse.isButtonDown(0)) {
 				System.exit(0);
 			}
-			
 		}
 		
 		if (pageNumber == 1){
@@ -133,9 +129,6 @@ public class PauseState extends BasicGameState {
 				if(Mouse.isButtonDown(0)) {
 					pageNumber = 2;
 				}
-				
-			}
-			else {
 			}
 		}
 		
@@ -144,9 +137,6 @@ public class PauseState extends BasicGameState {
 				if(Mouse.isButtonDown(0)) {
 					pageNumber = 1;
 				}
-				
-			}
-			else {
 			}
 		}
 	}

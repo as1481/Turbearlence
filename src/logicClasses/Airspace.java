@@ -282,9 +282,11 @@ public class Airspace {
 		
 		for (int i = 0; i < this.listOfFlightsInAirspace.size(); i++) {
 			this.listOfFlightsInAirspace.get(i).update();
+			//remove flights with empty routes - these flights have finished and reached the exit point.
 			if(this.listOfFlightsInAirspace.get(i).getFlightPlan().getCurrentRoute().size()==0) {
 				this.removeSpecificFlight(i);
 			}
+			//remove flights which have left the airspace boundaries.
 			else if (this.checkIfFlightHasLeftAirspace(this.getListOfFlights().get(i))) {
 				this.removeSpecificFlight(i);
 			}

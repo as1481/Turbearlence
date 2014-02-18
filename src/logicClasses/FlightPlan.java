@@ -52,7 +52,7 @@ public class FlightPlan {
 		int randomNumber = airspace.getListOfEntryPoints().size();
 		if (airspace.getAirport().isFlightOnRunway()){
 			//if there is a flight on the runway, choose from the 3 first points in the list
-			//these points are not on the airport
+			//This does not include the airport, since it is the last point in the list.
 			//hence, only one flight may take off.
 			randomNumber = rand.nextInt(randomNumber - 1);
 		} else {
@@ -312,7 +312,7 @@ public class FlightPlan {
 	
 	/**
 	 * markUnavaliableWaypoints: Handles alerting the user to any waypoints that are
-	 * invalid for selection
+	 * invalid for selection since they have already been visited.
 	 * @param g slick2d graphics object
 	 * @param gc slick2d gamecontainer object
 	 */

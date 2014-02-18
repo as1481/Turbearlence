@@ -33,15 +33,17 @@ public class Airport {
 		airportImage = new Image("res/graphics/airport.png");
 	}
 	
+	// RENDERER
+	
 	public void render(Graphics g, GameContainer gc) throws SlickException { 
-		
-		//airportImage.draw(this.x, this.y); // Airport image drawn with the origin of the image starting at the airport's x,y loc
-		
+
 		//draw airport accounting for image origin being at airport's x, y
 		// this centres the airport image on the airport location.
 		airportImage.draw(this.x - airportImage.getWidth()/2, this.y - airportImage.getHeight()/2);
 		
 	} 
+	
+	// MUTATORS AND ACCESSORS
 	
 	public float getX(){
 		return x;

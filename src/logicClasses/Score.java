@@ -55,7 +55,7 @@ public class Score {
 	}
 	
 	/**
-	 * Set the difficulty modifier
+	 * Set the difficulty modifiers, according to the selected difficulty.
 	 * @param x the difficulty selected
 	 */
 	public void setDifficulty(int x){

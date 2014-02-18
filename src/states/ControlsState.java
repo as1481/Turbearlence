@@ -13,8 +13,8 @@ public class ControlsState extends BasicGameState {
 	private static Image controlsBackgroundPage1,controlsBackgroundPage2, backButton, nextPageButton, previousPageButton, menuButton, quitButton, backButtonHover;
     private static Image nextPageHover, previousPageHover, quitHover;
     
-	public ControlsState(int state){
-		
+    //CONSTRUCTOR
+	public ControlsState(int state){	
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sbg)
@@ -59,7 +59,6 @@ public class ControlsState extends BasicGameState {
 			} else {
 				nextPageButton.draw(1030,280);
 			}
-			//menuButton.draw(1050, 20);
 			
 			if ((posX > 1150 && posX < 1170) && (posY > 550 && posY < 580)){
 				quitHover.draw(1148,556);
@@ -78,8 +77,6 @@ public class ControlsState extends BasicGameState {
 			} else {
 				previousPageButton.draw(30,280);
 			}
-			
-			//menuButton.draw(1050, 20);
 			
 			if ((posX > 1150 && posX < 1170) && (posY > 550 && posY < 580)){
 				quitHover.draw(1148,556);
@@ -101,7 +98,6 @@ public class ControlsState extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 	
-
 		int posX = Mouse.getX();
 		int posY = Mouse.getY();
 		
@@ -114,9 +110,6 @@ public class ControlsState extends BasicGameState {
 			}
 			
 		}
-		else {
-		}
-		
 		
 		if((posX > 1150 && posX < 1170) && (posY > 550 && posY < 580)) {
 			if(Mouse.isButtonDown(0)) {
@@ -124,18 +117,13 @@ public class ControlsState extends BasicGameState {
 			}
 			
 		}
-		else {
-		}
-		
+
 		if (pageNumber == 1){
 			
 			if((posX > 1030 && posX < 1193) && (posY > 280 && posY < 315)) {
 				if(Mouse.isButtonDown(0)) {
 					pageNumber = 2;
-				}
-				
-			}
-			else {
+				}	
 			}
 		}
 		
@@ -144,9 +132,6 @@ public class ControlsState extends BasicGameState {
 				if(Mouse.isButtonDown(0)) {
 					pageNumber = 1;
 				}
-				
-			}
-			else {
 			}
 		}
 	

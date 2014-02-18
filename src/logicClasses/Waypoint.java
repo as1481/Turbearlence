@@ -39,10 +39,7 @@ public class Waypoint extends Point {
 		 */
 	    
 	    public void render(Graphics g, Airspace airspace) throws SlickException {
-	    	
-	        
-	   
-	    	
+	
 	    	if(airspace.getControls().getSelectedFlight() !=null){ // If there is a selected flight use its next waypoint and draw it as next
 	    		if (airspace.getControls().getSelectedFlight().getFlightPlan().getCurrentRoute().indexOf(this)==0){
 	    			this.nextWaypointImage.draw((int)this.x-14, (int)this.y-14,30,30);
@@ -50,17 +47,13 @@ public class Waypoint extends Point {
 	    		else{
 	    			this.waypointImage.draw((int)this.x-14, (int)this.y-14,30,30);
 	    		}
-	    		
-	    	}
+	    	} 
 	    	else{
 	    		this.waypointImage.draw((int)this.x-14, (int)this.y-14,30,30); // If there is no flight then draw the waypoint as not next
 		    	
 	    	}
 	    	g.setColor(Color.black);
 	    	g.drawString(this.pointRef, (int)this.x-3, (int)this.y-4);
-		
 	    }
-	
-
 
 }
