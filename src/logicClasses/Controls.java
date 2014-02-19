@@ -416,14 +416,14 @@ public class Controls {
 				} else if (this.selectedFlight.isPermittedToLand() == true) {
 					g.drawString("Abort Landing", 10, 450);
 				} else {
-					g.drawString("Don't Land", 10, 450);
+					g.drawString("", 10, 450);
 				}
 				
 				//draw the lavel for the take off button
 				if(this.selectedFlight.isRequestingToTakeOff() == true){
 					g.drawString("Permit to Take Off", 10, 480);
 				} else {
-					g.drawString("Don't Take Off", 10, 480);
+					g.drawString("", 10, 480);
 				}
 				
 				
